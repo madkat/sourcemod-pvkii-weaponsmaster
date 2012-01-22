@@ -29,13 +29,13 @@ new String:EventSounds[Sounds:MaxSounds][64];
 
 InitSounds()
 {
-    EventSounds[Welcome] = "weaponsmaster/welcome.wav"
+    EventSounds[Welcome] = "weaponsmaster/welcome.wav";
     //"KnifeLevel" "gungame/knife_level.wav"
     //"NadeLevel" "gungame/nade_level.wav"
     //"LevelSteal" "gungame/smb3_1-up.wav"
-    EventSounds[Up] = "weaponsmaster/smb3_powerup.wav"
-    EventSounds[Down] = "weaponsmaster/smb3_powerdown.wav"
-    EventSounds[Spree] = "weaponsmaster/smb_star.mp3"
+    EventSounds[Up] = "weaponsmaster/smb3_powerup.wav";
+    EventSounds[Down] = "weaponsmaster/smb3_powerdown.wav";
+    EventSounds[Spree] = "weaponsmaster/smb_star.mp3";
     //"Autoff" "gungame/smb_warning2.mp3"
     //"MultiKill" "common/stuck1.wav"
 }
