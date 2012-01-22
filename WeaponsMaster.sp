@@ -33,7 +33,7 @@ new Handle:hForceRespawn;
 #define C_LEVEL		1
 #define C_KILLCOUNT	2
 #define C_SPREECOUNT	3
-new client_info[MAXPLAYERS + 1][3];
+new client_info[MAXPLAYERS + 1][4];
 new leader_level;
 new String:leader_name[MAX_NAME_LENGTH];
 
