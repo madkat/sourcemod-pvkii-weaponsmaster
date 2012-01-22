@@ -10,7 +10,7 @@
 #define W_MAX_LEVEL	18
 
 #define W_STRING_LEN    20
-const String:weapon_names[19][W_STRING_LEN] = {
+String:weapon_names[19][W_STRING_LEN] = {
     "archersword",
     "axesword",
     "bigaxe",
@@ -32,7 +32,7 @@ const String:weapon_names[19][W_STRING_LEN] = {
     "parrot"
 };
 
-const weapon_properties[19][5] = {
+weapon_properties[19][5] = {
     { W_MELEE	, 1 , 0 , -1 },
     { W_MELEE	, 2 , 1 , -1 },
     { W_MELEE	, 1 , 1 , -1 },
