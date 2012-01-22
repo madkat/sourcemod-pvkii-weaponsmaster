@@ -4,13 +4,16 @@
 #include <sourcemod>
 #include <sdktools>
 
+#include "wm_config.sp"
+#include "wm_weapondata.sp"
+
 #define PL_VERSION "0.1"
 #define SERVER_TAG "wm"
 
 public Plugin:myinfo = {
     name        = "Weapons Master",
     author      = "MadKat",
-    description = "Players fight through the full gamut of weapons",
+    description = "Players fight through the full gamut of weapons for total victory.",
     version     = PL_VERSION,
     url         = "http://www.github.com/madkat"
 }
@@ -26,76 +29,13 @@ new Handle:hRemoveAllItems;
 // ForceRespawn(void)
 new Handle:hForceRespawn;
 
-#define W_USERID	0
-#define W_LEVEL		1
-#define W_KILLCOUNT	2
+#define C_USERID	0
+#define C_LEVEL		1
+#define C_KILLCOUNT	2
+#define C_SPREECOUNT	3
 new client_info[MAXPLAYERS + 1][3];
 new leader_level;
 new String:leader_name[MAX_NAME_LENGTH];
-
-new cvar_enabled;
-new cvar_debug;
-new cvar_killstolevel;
-new cvar_autorespawn;
-new cvar_health;
-new cvar_armor;
-new Float:cvar_movespeed;
-
-#define W_MELEE 	0
-#define W_RANGED 	1
-#define W_SPECIAL 	2
-
-#define W_TYPE 		0
-#define W_SLOT 		1
-#define W_SPCATK	2
-#define W_AMMO_QTY	3
-
-#define W_MAX_LEVEL	18
-
-#define W_STRING_LEN    20
-static const String:weapon_names[19][W_STRING_LEN] = {
-    "archersword",
-    "axesword",
-    "bigaxe",
-    "cutlass",
-    "cutlass2",
-    "seaxshield",
-    "spear",
-    "swordshield",
-    "twoaxe",
-    "twosword",
-    "vikingshield",
-    "blunderbuss",
-    "flintlock",
-    "crossbow",
-    "longbow",
-    "javelin",
-    "throwaxe",
-    "powderkeg",
-    "parrot"
-};
-
-static const weapon_properties[19][5] = {
-    { W_MELEE	, 1 , 0 , -1 },
-    { W_MELEE	, 2 , 1 , -1 },
-    { W_MELEE	, 1 , 1 , -1 },
-    { W_MELEE	, 1 , 1 , -1 },
-    { W_MELEE	, 1 , 0 , -1 },
-    { W_MELEE	, 2 , 0 , -1 },
-    { W_MELEE	, 1 , 1 , -1 },
-    { W_MELEE	, 2 , 0 , -1 },
-    { W_MELEE	, 1 , 0 , -1 },
-    { W_MELEE	, 1 , 1 , -1 },
-    { W_MELEE	, 2 , 1 , -1 },
-    { W_RANGED	, 2 , 1 , 10 },
-    { W_RANGED	, 2 , 0 , 12 },
-    { W_RANGED	, 2 , 0 , 15 },
-    { W_RANGED	, 3 , 1 , 30 },
-    { W_RANGED	, 3 , 0 , 3  },
-    { W_RANGED	, 3 , 0 , 8  },
-    { W_SPECIAL	, 3 , 0 , -1  },
-    { W_SPECIAL	, 3 , 0 , 1  }
-};
 
 new h_iMaxHealth;
 new h_iHealth;
@@ -141,34 +81,8 @@ public OnPluginStart() {
     
     CloseHandle(conf);
 
-    /*
-	Cvars
-    */
-    CreateConVar("pvkii_wm_version", PL_VERSION, "Weapons Master for PVKII.", FCVAR_SPONLY | FCVAR_NOTIFY | FCVAR_PLUGIN);
-    
-    new Handle:cv_enabled 	= CreateConVar("wm_enabled",		"1", "Enables/disables PVKII Weapons Master.", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 0.0, true, 1.0);
-    new Handle:cv_debug 	= CreateConVar("wm_debug",		"0", "Debug mode.", FCVAR_PLUGIN, true, 0.0, true, 1.0);
-    new Handle:cv_killstolevel  = CreateConVar("wm_killstolevel",	"1", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 0.0, true, 1.0);
-    new Handle:cv_autorespawn   = CreateConVar("wm_autorespawn", 	"0", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 0.0, true, 10.0);
-    new Handle:cv_health        = CreateConVar("wm_health",		"100", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 1.0, false, 1.0);
-    new Handle:cv_armor         = CreateConVar("wm_armor",		"100", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 1.0, false, 1.0);
-    new Handle:cv_movespeed     = CreateConVar("wm_movespeed",		"220.0", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 1.0, true, 255.0);
-    
-    HookConVarChange(cv_enabled, 	cvHookEnabled);
-    HookConVarChange(cv_debug,  	cvHookDebug);
-    HookConVarChange(cv_killstolevel,  	cvHookKillsToLevel);
-    HookConVarChange(cv_autorespawn,  	cvHookAutoRespawn);
-    HookConVarChange(cv_health, 	cvHookHealth);
-    HookConVarChange(cv_armor, 		cvHookArmor);
-    HookConVarChange(cv_movespeed, 	cvHookMoveSpeed);
-    
-    cvar_enabled 	= GetConVarBool(cv_enabled);
-    cvar_debug 		= GetConVarBool(cv_debug);
-    cvar_killstolevel	= GetConVarInt(cv_killstolevel);
-    cvar_autorespawn	= GetConVarInt(cv_autorespawn);
-    cvar_health 	= GetConVarInt(cv_health);
-    cvar_armor  	= GetConVarInt(cv_armor);
-    cvar_movespeed 	= GetConVarFloat(cv_movespeed);
+    InitCVARs();
+    InitSounds();
     
     /*
 	Event Hooks
@@ -194,7 +108,7 @@ public OnPluginStart() {
 }
 
 public Action:Command_LevelPlayer(client, args) {
-    LevelUp(client, weapon_names[client_info[client][W_LEVEL]]);
+    LevelUp(client, weapon_names[client_info[client][C_LEVEL]]);
     return Plugin_Handled;
 }
 
@@ -203,26 +117,26 @@ public Action:Command_LevelAllPlayers(client, args) {
     return Plugin_Handled;
 }
 
-public cvHookEnabled(Handle:cvar, const String:oldVal[], const String:newVal[]) { 
-    cvar_enabled = GetConVarBool(cvar);
-    if (!cvar_enabled) {
-	RemoveServerTag(SERVER_TAG);
-    } else {
-	AddServerTag(SERVER_TAG);
-    }
-}
-public cvHookDebug(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_debug = GetConVarBool(cvar); }
-public cvHookKillsToLevel(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_killstolevel = GetConVarInt(cvar); }
-public cvHookAutoRespawn(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_autorespawn = GetConVarInt(cvar); }
-public cvHookHealth(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_health = GetConVarInt(cvar); }
-public cvHookArmor(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_armor = GetConVarInt(cvar); }
-public cvHookMoveSpeed(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_movespeed = GetConVarFloat(cvar); }
-
 public OnClientPutInServer(client) {
     if (cvar_enabled) {
 	// Welcome message?
-	client_info[client][W_LEVEL] = 0;
-	client_info[client][W_KILLCOUNT] = 0;
+	client_info[client][C_LEVEL] = 0;
+	client_info[client][C_KILLCOUNT] = 0;
+        client_info[client][C_SPREECOUNT] = 0;
+    }
+}
+
+public OnPluginStart()
+{
+    decl String:Hi[PLATFORM_MAX_PATH];
+    for ( new Sounds:i = Welcome; i < MaxSounds; i++ )
+    {
+        if ( EventSounds[i][0] )
+        {
+            PrecacheSound(EventSounds[i]);
+            Format(Hi, sizeof(Hi), "sound/%s", EventSounds[i]);
+            AddFileToDownloadsTable(Hi);
+        }
     }
 }
 
@@ -251,7 +165,7 @@ public GiveWeapons(client)
     decl String:primary_name[W_STRING_LEN];
     decl String:secondary_name[W_STRING_LEN];
 
-    weapon_id = client_info[client][W_LEVEL];
+    weapon_id = client_info[client][C_LEVEL];
     Format(primary_name, W_STRING_LEN, "weapon_%s", weapon_names[weapon_id]);
 
     weapon_object = SDKCall(hGiveNamedItem, client, primary_name, 0);
@@ -280,8 +194,8 @@ public GiveWeapons(client)
 
 public OnSuicide(client) {
     // Suicide results in level loss
-    if (client_info[client][W_LEVEL] > 0) {
-	client_info[client][W_LEVEL]--;
+    if (client_info[client][C_LEVEL] > 0) {
+	client_info[client][C_LEVEL]--;
     }
 }
 
@@ -296,12 +210,12 @@ public OnVictory(client) {
 }
 
 public PrintLevelInfo(client) {
-    new level = client_info[client][W_LEVEL] + 1;
+    new level = client_info[client][C_LEVEL] + 1;
 
     if (level >= leader_level) {
 	new ties = 0;
 	for (new i = 1; i <= MaxClients; i++) {
-	    if ((client_info[i][W_LEVEL] == leader_level)
+	    if ((client_info[i][C_LEVEL] == leader_level)
 		&& (i != client))
 	    {
 		ties++;
@@ -326,7 +240,7 @@ public PrintLevelInfo(client) {
 }
 
 public CheckLeaderboard(client) {
-    new level = client_info[client][W_LEVEL] + 1;
+    new level = client_info[client][C_LEVEL] + 1;
     decl String:name[MAX_NAME_LENGTH];
     GetClientName(client, name, MAX_NAME_LENGTH);
     // Leader info
@@ -346,8 +260,9 @@ public LevelUp(client, String:weapon[W_STRING_LEN]) {
     new level_up = false;
     if (cvar_debug) { PrintToServer("WM Kill with weapon %s", weapon); }
 
-    if (weapon[0] == weapon_names[client_info[client][W_LEVEL]][0]) {
-	client_info[client][W_KILLCOUNT]++;
+    if (weapon[0] == weapon_names[client_info[client][C_LEVEL]][0]) {
+	client_info[client][C_KILLCOUNT]++;
+        client_info[client][C_SPREECOUNT]++;
 	if (cvar_debug) { PrintToServer("WM Kill count increased."); }
     }
     else {
@@ -355,12 +270,12 @@ public LevelUp(client, String:weapon[W_STRING_LEN]) {
 	if (cvar_debug) { PrintToServer("WM Ammo."); }
     }
 
-    if (client_info[client][W_KILLCOUNT] >= cvar_killstolevel) {
+    if (client_info[client][C_KILLCOUNT] >= cvar_killstolevel) {
 	if (cvar_debug) { PrintToServer("WM Level up met."); }
 	level_up = true;
-	client_info[client][W_LEVEL]++;
-	client_info[client][W_KILLCOUNT] = 0;
-	if (client_info[client][W_LEVEL] > W_MAX_LEVEL) {
+	client_info[client][C_LEVEL]++;
+	client_info[client][C_KILLCOUNT] = 0;
+	if (client_info[client][C_LEVEL] > W_MAX_LEVEL) {
 	    if (cvar_debug) { PrintToServer("WM Victory met."); }
 	    OnVictory(client);
 	    return;
@@ -376,6 +291,13 @@ public LevelUp(client, String:weapon[W_STRING_LEN]) {
 	RemoveWeapons(client);
 	if (cvar_debug) { PrintToServer("WM GiveWeapons."); }
 	GiveWeapons(client);
+    }
+
+    if (client_info[client][C_SPREECOUNT] >= cvar_killsforspree) {
+        client_info[client][C_SPREECOUNT] = 0;
+        if (cvar_killsforspree > 0) {
+            // Grant killing spree bonus
+        }
     }
 }
 
@@ -432,6 +354,8 @@ public round_end(Handle:event, const String:name[], bool:dontBroadcast) {
 public gamemode_roundrestart(Handle:event, const String:name[], bool:dontBroadcast) {
     
 }
+
+
 
 /*
     Client joins game
