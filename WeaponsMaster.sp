@@ -4,11 +4,11 @@
 #include <sourcemod>
 #include <sdktools>
 
-#include "wm_config.sp"
-#include "wm_weapondata.sp"
-
 #define PL_VERSION "0.1"
 #define SERVER_TAG "wm"
+
+#include "wm_config.sp"
+#include "wm_weapondata.sp"
 
 public Plugin:myinfo = {
     name        = "Weapons Master",
