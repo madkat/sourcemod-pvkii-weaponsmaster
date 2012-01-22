@@ -83,6 +83,16 @@ public OnPluginStart() {
 
     InitCVARs();
     InitSounds();
+    decl String:Hi[PLATFORM_MAX_PATH];
+    for ( new Sounds:i = Welcome; i < MaxSounds; i++ )
+    {
+        if ( EventSounds[i][0] )
+        {
+            PrecacheSound(EventSounds[i]);
+            Format(Hi, sizeof(Hi), "sound/%s", EventSounds[i]);
+            AddFileToDownloadsTable(Hi);
+        }
+    }
     
     /*
 	Event Hooks
@@ -123,20 +133,6 @@ public OnClientPutInServer(client) {
 	client_info[client][C_LEVEL] = 0;
 	client_info[client][C_KILLCOUNT] = 0;
         client_info[client][C_SPREECOUNT] = 0;
-    }
-}
-
-public OnPluginStart()
-{
-    decl String:Hi[PLATFORM_MAX_PATH];
-    for ( new Sounds:i = Welcome; i < MaxSounds; i++ )
-    {
-        if ( EventSounds[i][0] )
-        {
-            PrecacheSound(EventSounds[i]);
-            Format(Hi, sizeof(Hi), "sound/%s", EventSounds[i]);
-            AddFileToDownloadsTable(Hi);
-        }
     }
 }
 
