@@ -38,6 +38,17 @@ InitSounds()
     EventSounds[Spree] = "weaponsmaster/smb_star.mp3";
     //"Autoff" "gungame/smb_warning2.mp3"
     //"MultiKill" "common/stuck1.wav"
+
+    decl String:Hi[PLATFORM_MAX_PATH];
+    for ( new Sounds:i = Welcome; i < MaxSounds; i++ )
+    {
+        if ( EventSounds[i][0] )
+        {
+            PrecacheSound(EventSounds[i]);
+            Format(Hi, sizeof(Hi), "sound/%s", EventSounds[i]);
+            AddFileToDownloadsTable(Hi);
+        }
+    }
 }
 
 InitCVARs()

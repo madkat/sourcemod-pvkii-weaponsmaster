@@ -46,6 +46,7 @@ new h_iMaxArmor;
 new h_ArmorValue;
 new h_flDefaultSpeed;
 new h_flMaxspeed;
+new h_iPlayerClass;
 
 public OnPluginStart() {
     /*
@@ -86,16 +87,6 @@ public OnPluginStart() {
 
     InitCVARs();
     InitSounds();
-    decl String:Hi[PLATFORM_MAX_PATH];
-    for ( new Sounds:i = Welcome; i < MaxSounds; i++ )
-    {
-        if ( EventSounds[i][0] )
-        {
-            PrecacheSound(EventSounds[i]);
-            Format(Hi, sizeof(Hi), "sound/%s", EventSounds[i]);
-            AddFileToDownloadsTable(Hi);
-        }
-    }
     
     /*
 	Event Hooks
@@ -120,6 +111,7 @@ public OnPluginStart() {
     h_ArmorValue	= FindSendPropInfo("CPVK2Player", "m_ArmorValue");
     h_flMaxspeed	= FindSendPropInfo("CPVK2Player", "m_flMaxspeed");
     h_flDefaultSpeed	= FindSendPropInfo("CPVK2Player", "m_flDefaultSpeed");
+    h_iPlayerClass	= FindSendPropInfo("CPVK2Player", "m_iPlayerClass");
 }
 
 public Action:Command_LevelPlayer(client, args) {
@@ -149,6 +141,23 @@ public OnClientPutInServer(client) {
 	client_info[client][C_KILLCOUNT] = 0;
         client_info[client][C_SPREECOUNT] = 0;
         client_info[client][C_FIRSTJOIN] = 1;
+    }
+}
+
+public OnMapStart() {
+    for (new i = 1; i <= MaxClients; i++) if (IsClientInGame(i)) OnClientPutInServer(i);
+    leader_level = 1;
+    leader_name = "";
+
+    if (EventSounds[Welcome][0] == '\0') {
+        InitSounds();
+    }
+}
+
+public OnMapEnd() {
+    for ( new Sounds:i = Welcome; i < MaxSounds; i++ )
+    {
+        EventSounds[i][0] = '\0';
     }
 }
 
@@ -201,13 +210,6 @@ public GiveWeapons(client)
 	    // Client probably already had it
 	}
 	SDKCall(hWeapon_Equip, client, weapon_object);
-    }
-}
-
-public OnMapEnd() {
-    for ( new Sounds:i = Welcome; i < MaxSounds; i++ )
-    {
-        EventSounds[i][0] = '\0';
     }
 }
 
@@ -319,12 +321,6 @@ public LevelUp(client, String:weapon[W_STRING_LEN]) {
             UTIL_HandleSpree(client);
         }
     }
-}
-
-public OnMapStart() {
-    for (new i = 1; i <= MaxClients; i++) if (IsClientInGame(i)) OnClientPutInServer(i);
-    leader_level = 1;
-    leader_name = "";
 }
 
 public player_spawn(Handle:event, const String:name[], bool:dontBroadcast) {
