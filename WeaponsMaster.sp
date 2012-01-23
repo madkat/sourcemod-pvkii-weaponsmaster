@@ -294,6 +294,7 @@ public LevelUp(client, String:weapon[W_STRING_LEN]) {
 	level_up = true;
 	client_info[client][C_LEVEL]++;
 	client_info[client][C_KILLCOUNT] = 0;
+        UTIL_PlaySound(client, Up);
 	if (client_info[client][C_LEVEL] > W_MAX_LEVEL) {
 	    if (cvar_debug) { PrintToServer("WM Victory met."); }
 	    OnVictory(client);
