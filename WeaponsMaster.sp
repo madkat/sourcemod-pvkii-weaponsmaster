@@ -107,6 +107,7 @@ public OnPluginStart() {
     
     RegAdminCmd("wm_levelplayer", Command_LevelPlayer, ADMFLAG_SLAY);
     RegAdminCmd("wm_levelallplayers", Command_LevelAllPlayers, ADMFLAG_SLAY);
+    RegAdminCmd("wm_testsound", Command_TestSound, ADMFLAG_SLAY);
 
     AddServerTag(SERVER_TAG);
 
@@ -120,6 +121,11 @@ public OnPluginStart() {
 
 public Action:Command_LevelPlayer(client, args) {
     LevelUp(client, weapon_names[client_info[client][C_LEVEL]]);
+    return Plugin_Handled;
+}
+
+public Action:Command_TestSound(client, args) {
+    UTIL_PlaySound(client, Welcome);
     return Plugin_Handled;
 }
 
