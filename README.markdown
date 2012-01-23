@@ -69,7 +69,7 @@ Bonus move speed to give to a player on a killing spree
 
 Compiled version of WeaponsMaster.sp available:
 
- * Not yet available
+ * https://github.com/madkat/sourcemod-pvkii-weaponsmaster/raw/master/WeaponsMaster.smx
 
 # License
 
