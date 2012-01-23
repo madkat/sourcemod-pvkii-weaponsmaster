@@ -55,7 +55,7 @@ InitCVARs()
     new Handle:cv_armor         = CreateConVar("wm_armor",		"100", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 1.0, false, 1.0);
     new Handle:cv_killsforspree = CreateConVar("wm_killsforspree",	"3", "Number of kills for a player to enter a killing spree. 0 to disable", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 0.0, true, 10.0);
     new Handle:cv_movespeed     = CreateConVar("wm_movespeed",		"220.0", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 1.0, true, 300.0);
-    new Handle:cv_spreemovespeed= CreateConVar("wm_spreemovespeed",	"60.0", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 1.0, true, 300.0);
+    new Handle:cv_spreemovespeed= CreateConVar("wm_spreemovespeed",	"100.0", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 1.0, true, 300.0);
     
     HookConVarChange(cv_enabled, 	cvHookEnabled);
     HookConVarChange(cv_debug,  	cvHookDebug);
