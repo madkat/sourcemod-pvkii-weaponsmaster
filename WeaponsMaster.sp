@@ -33,7 +33,8 @@ new Handle:hForceRespawn;
 #define C_LEVEL		1
 #define C_KILLCOUNT	2
 #define C_SPREECOUNT	3
-new client_info[MAXPLAYERS + 1][4];
+#define C_FIRSTJOIN     4
+new client_info[MAXPLAYERS + 1][5];
 new leader_level;
 new String:leader_name[MAX_NAME_LENGTH];
 
@@ -133,6 +134,7 @@ public OnClientPutInServer(client) {
 	client_info[client][C_LEVEL] = 0;
 	client_info[client][C_KILLCOUNT] = 0;
         client_info[client][C_SPREECOUNT] = 0;
+        client_info[client][C_FIRSTJOIN] = 1;
     }
 }
 
@@ -185,6 +187,13 @@ public GiveWeapons(client)
 	    // Client probably already had it
 	}
 	SDKCall(hWeapon_Equip, client, weapon_object);
+    }
+}
+
+public OnMapEnd() {
+    for ( new Sounds:i = Welcome; i < MaxSounds; i++ )
+    {
+        EventSounds[i][0] = '\0';
     }
 }
 
@@ -308,6 +317,13 @@ public player_spawn(Handle:event, const String:name[], bool:dontBroadcast) {
     if (!client || !IsPlayerAlive(client) || !IsClientInGame(client) || !cvar_enabled)
 	return;
 
+    if ( !IsFakeClient(client) ) {
+        if (client_info[client][C_FIRSTJOIN]) {
+            client_info[client][C_FIRSTJOIN] = 0;
+            UTIL_PlaySound(client, Welcome);
+        }
+    }
+
     SetEntData(client, h_iMaxHealth,	cvar_health, 4, true);
     SetEntData(client, h_iHealth,	cvar_health, 4, true);
     SetEntData(client, h_iMaxArmor,	cvar_armor, 4, true);
@@ -349,6 +365,23 @@ public round_end(Handle:event, const String:name[], bool:dontBroadcast) {
 }
 public gamemode_roundrestart(Handle:event, const String:name[], bool:dontBroadcast) {
     
+}
+
+UTIL_PlaySound(client, Sounds:type)
+{
+    if (!EventSounds[type][0])
+    {
+        return;
+    }
+    if (client && !IsClientInGame(client))
+    {
+        return;
+    }
+    if (!client) {
+        EmitSoundToAll(EventSounds[type]);
+    } else {
+        EmitSoundToClient(client, EventSounds[type]);
+    }
 }
 
 
