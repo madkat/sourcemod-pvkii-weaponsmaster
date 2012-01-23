@@ -43,21 +43,27 @@ Amount of armor to give to each player
 Max move speed to give to each player
 
     wm_movespeed (220)
+    
+Number of kills needed to trigger a killing spree (0 to disable)
+
+    wm_killsforspree (3)
+    
+Bonus move speed to give to a player on a killing spree
+
+    wm_spreemovespeed (100)
 
 # Installation
 
  * Install SourceMod (http://www.sourcemod.net/)
- * Compile WeaponsMaster with the SourceMod Compiler (http://www.sourcemod.net/compiler.php)
- * Place the WeaponsMaster.smx file into your addons/sourcemod/plugins/ directory.
- * Place the weaponsmaster.cfg.txt file into your addons/sourcemod/gamedata/ directory.
+ * Place the WeaponsMaster.smx file into your pvkii/addons/sourcemod/plugins/ directory.
+ * Place the weaponsmaster.cfg.txt file into your pvkii/addons/sourcemod/gamedata/ directory.
+ * Place the contents of the sounds subfolder into your pvkii/sound/weaponsmaster/ directory.
  * Restart your srcds or change levels.
  * All done! Enjoy.
 
 # ToDo List
 
  * Fix bugs
- * Implement sound effects for level up and level down
- * Implement "bonus" speed/sound effect for multiple levels in one life
 
 # Binaries
 
