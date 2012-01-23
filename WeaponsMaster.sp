@@ -328,12 +328,21 @@ public player_spawn(Handle:event, const String:name[], bool:dontBroadcast) {
     if (!client || !IsPlayerAlive(client) || !IsClientInGame(client) || !cvar_enabled)
 	return;
 
-    if ( !IsFakeClient(client) ) {
-        if (client_info[client][C_FIRSTJOIN]) {
-            client_info[client][C_FIRSTJOIN] = 0;
-            if (cvar_debug) { PrintToServer("WM Welcome Sound"); }
-            UTIL_PlaySound(client, Welcome);
+    new current_class = GetEntData(client, h_iPlayerClass);
+    if (current_class < 0) {
+        if ( !IsFakeClient(client) ) {
+            if (client_info[client][C_FIRSTJOIN]) {
+                client_info[client][C_FIRSTJOIN] = 0;
+                if (cvar_debug) { PrintToServer("WM Welcome Sound"); }
+                UTIL_PlaySound(client, Welcome);
+            }
         }
+        return;
+    }
+
+    new current_health = GetEntData(client, h_iHealth);
+    if (current_health <= 0) {
+        return;
     }
 
     SetEntData(client, h_iMaxHealth,	cvar_health, 4, true);
@@ -361,6 +370,8 @@ public player_death(Handle:event, const String:name[], bool:dontBroadcast) {
     //new assistid = GetClientOfUserId(GetEventInt(event, "assistid"));
     decl String:weapon[W_STRING_LEN]; GetEventString(event, "weapon", weapon, W_STRING_LEN);
     
+    client_info[client][C_SPREECOUNT] = 0;
+
     if (client == attacker) {
 	OnSuicide(client);
     }
