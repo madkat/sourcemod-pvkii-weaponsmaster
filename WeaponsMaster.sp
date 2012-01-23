@@ -301,6 +301,7 @@ public LevelUp(client, String:weapon[W_STRING_LEN]) {
     if (client_info[client][C_SPREECOUNT] >= cvar_killsforspree) {
         client_info[client][C_SPREECOUNT] = 0;
         if (cvar_killsforspree > 0) {
+            if (cvar_debug) { PrintToServer("WM Killing Spree."); }
             // Grant killing spree bonus
         }
     }
@@ -320,6 +321,7 @@ public player_spawn(Handle:event, const String:name[], bool:dontBroadcast) {
     if ( !IsFakeClient(client) ) {
         if (client_info[client][C_FIRSTJOIN]) {
             client_info[client][C_FIRSTJOIN] = 0;
+            if (cvar_debug) { PrintToServer("WM Welcome Sound"); }
             UTIL_PlaySound(client, Welcome);
         }
     }
