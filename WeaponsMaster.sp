@@ -38,6 +38,8 @@ new client_info[MAXPLAYERS + 1][5];
 new leader_level;
 new String:leader_name[MAX_NAME_LENGTH];
 
+new g_spreeEffects[MAXPLAYERS+1] = {0, ...};
+
 new h_iMaxHealth;
 new h_iHealth;
 new h_iMaxArmor;
@@ -108,6 +110,7 @@ public OnPluginStart() {
     RegAdminCmd("wm_levelplayer", Command_LevelPlayer, ADMFLAG_SLAY);
     RegAdminCmd("wm_levelallplayers", Command_LevelAllPlayers, ADMFLAG_SLAY);
     RegAdminCmd("wm_testsound", Command_TestSound, ADMFLAG_SLAY);
+    RegAdminCmd("wm_testspree", Command_TestSpree, ADMFLAG_SLAY);
 
     AddServerTag(SERVER_TAG);
 
@@ -126,6 +129,11 @@ public Action:Command_LevelPlayer(client, args) {
 
 public Action:Command_TestSound(client, args) {
     UTIL_PlaySound(client, Welcome);
+    return Plugin_Handled;
+}
+
+public Action:Command_TestSpree(client, args) {
+    UTIL_HandleSpree(client);
     return Plugin_Handled;
 }
 
@@ -307,8 +315,7 @@ public LevelUp(client, String:weapon[W_STRING_LEN]) {
     if (client_info[client][C_SPREECOUNT] >= cvar_killsforspree) {
         client_info[client][C_SPREECOUNT] = 0;
         if (cvar_killsforspree > 0) {
-            if (cvar_debug) { PrintToServer("WM Killing Spree."); }
-            // Grant killing spree bonus
+            UTIL_HandleSpree(client);
         }
     }
 }
@@ -375,6 +382,16 @@ public gamemode_roundrestart(Handle:event, const String:name[], bool:dontBroadca
     
 }
 
+UTIL_HandleSpree(client)
+{
+    if (cvar_debug) { PrintToServer("WM Killing Spree."); }
+    decl String:name[MAX_NAME_LENGTH];
+    GetClientName(client, name, MAX_NAME_LENGTH);
+    PrintToChatAll("%s is on a killing spree!", name);
+    UTIL_StartSpreeEffects(client);
+    CreateTimer(10.0, RemoveBonus, client);
+}
+
 UTIL_PlaySound(client, Sounds:type)
 {
     if (!EventSounds[type][0])
@@ -389,6 +406,44 @@ UTIL_PlaySound(client, Sounds:type)
         EmitSoundToAll(EventSounds[type]);
     } else {
         EmitSoundToClient(client, EventSounds[type]);
+    }
+}
+
+UTIL_StartSpreeEffects(client)
+{
+    if ( g_spreeEffects[client] ) {
+        return;
+    }
+    g_spreeEffects[client] = 1;
+
+    if ( cvar_spreemovespeed ) {
+        SetEntDataFloat(client, h_flMaxspeed, cvar_spreemovespeed + cvar_movespeed);
+    }
+    if ( EventSounds[Spree][0] ) {
+        EmitSoundToAll(EventSounds[Spree], client, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_NOFLAGS, SNDVOL_NORMAL, SNDPITCH_NORMAL);
+    }
+}
+
+UTIL_StopSpreeEffects(client)
+{
+    if ( !g_spreeEffects[client] ) {
+        return;
+    }
+    g_spreeEffects[client] = 0;
+    
+    if ( cvar_spreemovespeed ) {
+        SetEntDataFloat(client, h_flMaxspeed, cvar_movespeed);
+    }
+    if ( EventSounds[Spree][0] ) {
+        EmitSoundToAll(EventSounds[Spree], client, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_STOPLOOPING, SNDVOL_NORMAL, SNDPITCH_NORMAL);
+    }
+}
+
+public Action:RemoveBonus(Handle:timer, any:client)
+{
+    if ( IsClientInGame(client) )
+    {
+        UTIL_StopSpreeEffects(client);
     }
 }
 
