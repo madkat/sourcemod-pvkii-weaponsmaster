@@ -417,6 +417,7 @@ UTIL_StartSpreeEffects(client)
     g_spreeEffects[client] = 1;
 
     if ( cvar_spreemovespeed ) {
+        SetEntDataFloat(client, h_flDefaultSpeed, cvar_spreemovespeed + cvar_movespeed);
         SetEntDataFloat(client, h_flMaxspeed, cvar_spreemovespeed + cvar_movespeed);
     }
     if ( EventSounds[Spree][0] ) {
@@ -432,6 +433,7 @@ UTIL_StopSpreeEffects(client)
     g_spreeEffects[client] = 0;
     
     if ( cvar_spreemovespeed ) {
+        SetEntDataFloat(client, h_flDefaultSpeed, cvar_movespeed);
         SetEntDataFloat(client, h_flMaxspeed, cvar_movespeed);
     }
     if ( EventSounds[Spree][0] ) {
