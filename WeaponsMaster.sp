@@ -221,7 +221,7 @@ public OnSuicide(client) {
 	client_info[client][C_LEVEL]--;
     }
     UTIL_PlaySound(client, Down);
-    CheckLeaderboard();
+    CheckLeaderboard(client);
 }
 
 public OnVictory(client) {
@@ -269,15 +269,15 @@ public CheckLeaderboard(client) {
     decl String:name[MAX_NAME_LENGTH];
     GetClientName(client, name, MAX_NAME_LENGTH);
     // Leader info
-    if (level > leader_level && leader_name != name) {
+    if (level > leader_level) {
 	leader_name = name;
 	leader_level = level;
 	PrintToChatAll("%s is now leading on level %d.", name, level);
     }
-    else if (level == leader_level && leader_name != name) {
+    else if (level == leader_level) {
 	PrintToChatAll("%s is now tied with the other leaders on level %d.", name, level);
     }
-    else if (level < leader_level && leader_name == name) {
+    else if (level < leader_level) {
         //PrintToChatAll
     }
 }

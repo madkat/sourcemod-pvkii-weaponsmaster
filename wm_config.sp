@@ -29,7 +29,7 @@ new String:EventSounds[Sounds:MaxSounds][64];
 
 InitSounds()
 {
-    EventSounds[Welcome] = "weaponsmaster/welcome.mp3";
+    EventSounds[Welcome] = "weaponsmaster/welcome2.mp3";
     //"KnifeLevel" "gungame/knife_level.wav"
     //"NadeLevel" "gungame/nade_level.wav"
     //"LevelSteal" "gungame/smb3_1-up.wav"
