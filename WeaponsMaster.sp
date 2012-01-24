@@ -209,7 +209,9 @@ public GiveWeapons(client)
 	if (weapon_object == -1) {
 	    // Client probably already had it
 	}
-	SDKCall(hWeapon_Equip, client, weapon_object);
+	else {
+	    SDKCall(hWeapon_Equip, client, weapon_object);
+	}
     }
 }
 
