@@ -12,7 +12,7 @@ TryLevelUp(client, victim, String:weapon[W_STRING_LEN])
     }
 
     if (cvar_respawntimer > -1) {
-        LaunchRespawnTimer(client);
+        LaunchRespawnTimer(victim);
     }
 
     new level = ClientPlayerLevel[client];
@@ -175,7 +175,7 @@ public GiveWeapons(client)
     	if (weapon_object > -1) {
     	    EquipWeapon(client, weapon_object);
     	}
-        CPrintToChat(client, "%t", "Warmup round is in progress");
+        PrintToChat(client, "Warmup round is in progress");
         return;
     }
 
@@ -233,14 +233,14 @@ FindLeader()
 
 public PrintLevelInfo(client) {
     new level = ClientPlayerLevel[client];
-    CPrintToChat(client, "%t", "You are on level", level + 1, WeaponNames[WeaponOrder[level]]);
+    PrintToChat(client, "You are on level %d", level + 1);
 
     if (cvar_killstolevel > 1)
     {
         new kills = ClientKillCounter[client];
         //decl String:subtext[64];
         //Format(subtext, W_STRING_LEN, "You need %d kills to advance to the next level.", cvar_killstolevel - kills);
-        CPrintToChat(client, "%t", "You need", cvar_killstolevel - kills, "kills to advance to the next level.");
+        PrintToChat(client, "You need %d kills to advance to the next level", cvar_killstolevel - kills);
     }    
 }
 
@@ -252,39 +252,39 @@ public RecalculateLeader(client, old_level, new_level) {
         // New Leader
         LeaderName = name;
         LeaderLevel = new_level;
-        CPrintToChatAll("%t", name, "is leading on level", LeaderLevel + 1);
+        PrintToChatAll("%s is leading on level %d", name, LeaderLevel + 1);
     }
     else if (new_level == LeaderLevel) {
         // New Tie
         if (StrEqual(LeaderName, "")) {
-            CPrintToChatAll("%t", name, "is tied with the other leaders on level", LeaderLevel + 1);
+            PrintToChatAll("%s is tied with the other leaders on level %d", name, LeaderLevel + 1);
         }
         else {
-            CPrintToChatAll("%t", name, "is tied with", LeaderName, "on level", LeaderLevel + 1);
+            PrintToChatAll("%s is tied with %s on level %d", name, LeaderName, LeaderLevel + 1);
             LeaderName = "";
         }
     }
     else if (old_level == LeaderLevel) {
         // No longer in lead
         if (StrEqual(LeaderName, "")) {
-            CPrintToChatAll("%t", name, "is no longer tied for the lead.");
+            PrintToChatAll("%s is no longer tied for the lead.", name);
         }
         else {
             new new_leader = FindLeader();
             if (new_leader > 0) {
                 GetClientName(new_leader, LeaderName, MAX_NAME_LENGTH);
             }
-            CPrintToChatAll("%t", name, "forfeits the lead to", LeaderName);
+            PrintToChatAll("%s forfeits the lead to %s", name, LeaderName);
         }
     }
     else {
         if (IsClientInGame(client) && !IsFakeClient(client)) {
             new trail = LeaderLevel - new_level;
             if (trail > 1) {
-                CPrintToChat(client, "%t", "You are trailing the leader by", trail, "levels.");
+                PrintToChat(client, "You are trailing the leader by %d levels.", trail);
             }
             else {
-                CPrintToChat(client, "%t", "You are trailing the leader by", trail, "level.");
+                PrintToChat(client, "You are trailing the leader by %d level.", trail);
             }
         }
     }
