@@ -149,8 +149,8 @@ public OnPlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast) {
 	return;
 
     new current_class = GetEntData(client, h_iPlayerClass);
-    if (current_class > 0) {
-        if ( !IsFakeClient(client) ) {
+    if (current_class >= 0) {
+        if (!IsFakeClient(client)) {
             if (ClientFirstJoin[client]) {
                 ClientFirstJoin[client] = 0;
                 PlaySound(client, Welcome);

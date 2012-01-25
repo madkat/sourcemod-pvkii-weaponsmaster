@@ -118,6 +118,9 @@ public Action:WarmupTick(Handle:timer)
 
 LaunchRespawnTimer(client)
 {
+    if (!client || !IsClientInGame(client)) {
+        return;
+    }
     ClientSpawnTimer[client] = 0;
     CreateTimer(1.0, RespawnTick, client);
 }
