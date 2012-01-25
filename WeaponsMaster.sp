@@ -217,5 +217,5 @@ public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
     decl String:weapon[W_STRING_LEN];
     GetEventString(event, "weapon", weapon, W_STRING_LEN);
     
-    TryLevelUp(client, attacker, weapon);
+    TryLevelUp(attacker, client, weapon);
 }
