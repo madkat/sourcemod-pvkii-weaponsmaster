@@ -92,6 +92,7 @@ LaunchWarmupTimer()
 {
     if (cvar_warmuplength > 0) {
         WarmupRemaining = cvar_warmuplength;
+        for (new i = 1; i <= MaxClients; i++) if (IsClientInGame(i)) GiveWeapons(i);
         CreateTimer(1.0, WarmupTick);
     }
 }
