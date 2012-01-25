@@ -192,6 +192,9 @@ public OnPlayerChangeClass(Handle:event, const String:name[], bool:dontBroadcast
 public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
     new client = GetClientOfUserId(GetEventInt(event, "userid"));
     new attacker = GetClientOfUserId(GetEventInt(event, "attacker"));
+    if (!attacker || !IsPlayerAlive(attacker) || !IsClientInGame(attacker) || !cvar_enabled)
+	return;
+
     decl String:weapon[W_STRING_LEN];
     GetEventString(event, "weapon", weapon, W_STRING_LEN);
     

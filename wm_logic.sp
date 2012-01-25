@@ -7,7 +7,7 @@ TryLevelUp(client, victim, String:weapon[W_STRING_LEN])
 
     ClientSpreeCounter[victim] = 0;
 
-    if (IsClientInGame(victim) && victim == client) { // TODO: Make punishment optional
+    if (victim == client) { // TODO: Make punishment optional
         ChangeClientLevel(client, -1);
     }
 
