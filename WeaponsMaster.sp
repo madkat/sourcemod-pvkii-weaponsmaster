@@ -59,22 +59,29 @@ public OnPluginStart() {
     AddServerTag(SERVER_TAG);
 }
 
-public Action:OnBlanketDisabledEvent(Handle:event, const String:name[], bool:dontBroadcast)
+Debug(String:message[1024])
 {
     if (cvar_debug) {
-	PrintToServer("Eating a %s event", name);
+        PrintToServer(message);
     }
+}
+
+public Action:OnBlanketDisabledEvent(Handle:event, const String:name[], bool:dontBroadcast)
+{
+    //Debug("Eating a %s event", name);
     return Plugin_Handled;
 }
 
 public Action:OnGameModeFirstRoundBegin(Handle:event, const String:name[], bool:dontBroadcast)
 {
     //LaunchWarmupTimer();
+    Debug("FirstRoundBegins");
     return Plugin_Continue;
 }
 
 public Action:OnGameModeFirstRoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
 {
+    Debug("FirstRoundEnds");
     if (cvar_warmuplength > 0) {
 	return Plugin_Handled;
     }
