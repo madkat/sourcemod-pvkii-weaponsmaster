@@ -69,7 +69,7 @@ public Action:OnBlanketDisabledEvent(Handle:event, const String:name[], bool:don
 
 public Action:OnGameModeFirstRoundBegin(Handle:event, const String:name[], bool:dontBroadcast)
 {
-    LaunchWarmupTimer();
+    //LaunchWarmupTimer();
     return Plugin_Continue;
 }
 
