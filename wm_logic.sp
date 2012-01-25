@@ -57,7 +57,7 @@ ChangeClientLevel(client, difference)
     }
     PlaySound(client, Sounds:Up);
     
-    if (level > W_MAX_LEVEL) {
+    if (level >= W_MAX_LEVEL) {
         GameWon = true;
         FreezeAllPlayers();
         decl String:name[MAX_NAME_LENGTH + 1];
