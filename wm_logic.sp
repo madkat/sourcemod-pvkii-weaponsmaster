@@ -51,9 +51,11 @@ ChangeClientLevel(client, difference)
     ClientPlayerLevel[client] = level;
 
     if (level < old_level) {
+        PlaySound(client, Sounds:Down);
         return;
         //Suicide, no further action needed
     }
+    PlaySound(client, Sounds:Up);
     
     if (level > W_MAX_LEVEL) {
         GameWon = true;

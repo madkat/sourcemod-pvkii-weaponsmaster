@@ -61,6 +61,9 @@ public OnPluginStart() {
 
 public Action:OnBlanketDisabledEvent(Handle:event, const String:name[], bool:dontBroadcast)
 {
+    if (cvar_debug) {
+	PrintToServer("Eating a %s event", name);
+    }
     return Plugin_Handled;
 }
 
@@ -179,13 +182,11 @@ public OnPlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast) {
 }
 
 public OnPlayerChangeTeam(Handle:event, const String:name[], bool:dontBroadcast) {
-    new client = GetClientOfUserId(GetEventInt(event, "userid"));
-    if (!client) return;
+
 }
 
 public OnPlayerChangeClass(Handle:event, const String:name[], bool:dontBroadcast) {
-    new client = GetClientOfUserId(GetEventInt(event, "userid"));
-    if (!client) return;
+
 }
 
 public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
