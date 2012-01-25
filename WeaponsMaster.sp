@@ -166,7 +166,6 @@ public OnPlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast) {
                 PlaySound(client, Welcome);
             }
         }
-        return;
     }
 
     /*
