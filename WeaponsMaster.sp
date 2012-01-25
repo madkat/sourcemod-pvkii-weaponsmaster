@@ -114,6 +114,7 @@ public OnClientPutInServer(client) {
 	ClientKillCounter[client] = 0;
 	ClientSpreeCounter[client] = 0;
 	ClientSpreeEffects[client] = 0;
+        ClientPlayerDead[client] = 1;
 	ClientFirstJoin[client] = 1;
 
 	SetEntData(client, h_iMaxHealth,	-1, 4, true);
@@ -148,6 +149,15 @@ public OnPlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast) {
     if (!client || !IsPlayerAlive(client) || !IsClientInGame(client) || !cvar_enabled)
 	return;
 
+    if (!ClientFirstJoin[client] || !ClientPlayerDead[client]) {
+        if (!IsFakeClient(client)) {
+            PrintLevelInfo(client);
+        }
+    }
+    else {
+        ClientPlayerDead[client] = 0;
+    }
+
     new current_class = GetEntData(client, h_iPlayerClass);
     if (current_class >= 0) {
         if (!IsFakeClient(client)) {
@@ -159,10 +169,12 @@ public OnPlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast) {
         return;
     }
 
+    /*
     new current_health = GetEntData(client, h_iHealth);
     if (current_health <= 0) {
         return;
     }
+    */
 
     SetEntData(client, h_iMaxHealth,	cvar_health, 4, true);
     SetEntData(client, h_iHealth,	cvar_health, 4, true);
@@ -177,16 +189,22 @@ public OnPlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast) {
     }
 
     LaunchDelayGiveWeapons(client);
-
-    PrintLevelInfo(client);
 }
 
 public OnPlayerChangeTeam(Handle:event, const String:name[], bool:dontBroadcast) {
+    new client = GetClientOfUserId(GetEventInt(event, "client"));
+    if (!client || !IsPlayerAlive(client) || !IsClientInGame(client) || !cvar_enabled)
+	return;
 
+    ClientPlayerDead[client] = 1;
 }
 
 public OnPlayerChangeClass(Handle:event, const String:name[], bool:dontBroadcast) {
+    new client = GetClientOfUserId(GetEventInt(event, "client"));
+    if (!client || !IsPlayerAlive(client) || !IsClientInGame(client) || !cvar_enabled)
+	return;
 
+    ClientPlayerDead[client] = 1;
 }
 
 public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
@@ -194,6 +212,8 @@ public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
     new attacker = GetClientOfUserId(GetEventInt(event, "attacker"));
     if (!attacker || !IsPlayerAlive(attacker) || !IsClientInGame(attacker) || !cvar_enabled)
 	return;
+
+    ClientPlayerDead[client] = 1;
 
     decl String:weapon[W_STRING_LEN];
     GetEventString(event, "weapon", weapon, W_STRING_LEN);

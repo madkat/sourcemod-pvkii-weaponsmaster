@@ -16,6 +16,7 @@ new ClientSpreeCounter[MAXPLAYERS + 1] = {0, ...};
 new ClientSpreeEffects[MAXPLAYERS + 1] = {0, ...};
 new ClientSpawnTimer[MAXPLAYERS + 1] = {0, ...};
 new ClientFirstJoin[MAXPLAYERS + 1] = {0, ...};
+new ClientPlayerDead[MAXPLAYERS + 1] = {0, ...};
 
 #define W_MELEE 	0
 #define W_RANGED 	1
