@@ -65,6 +65,7 @@ ChangeClientLevel(client, difference)
         PrintCenterTextAll("%s is victorious!", name);
     
         LaunchChangeLevel();
+        return;
     }
 
     RecalculateLeader(client, old_level, level);
@@ -92,7 +93,7 @@ LaunchWarmupTimer()
 {
     if (cvar_warmuplength > 0) {
         WarmupRemaining = cvar_warmuplength;
-        for (new i = 1; i <= MaxClients; i++) if (IsClientInGame(i)) GiveWeapons(i);
+        for (new i = 1; i <= MaxClients; i++) if (IsClientInGame(i)) LaunchDelayGiveWeapons(i, 0.0);
         CreateTimer(1.0, WarmupTick);
     }
 }
@@ -104,6 +105,7 @@ public Action:WarmupTick(Handle:timer)
         CreateTimer(1.0, WarmupTick);
     }
     else {
+        for (new i = 1; i <= MaxClients; i++) if (IsClientInGame(i)) LaunchDelayGiveWeapons(i, 0.0);
         new Handle:event = CreateEvent("gamemode_firstround_wait_end");
     	if (event == INVALID_HANDLE)
     	{
@@ -140,9 +142,9 @@ public Action:RespawnTick(Handle:timer, any:client)
     }
 }
 
-LaunchDelayGiveWeapons(client)
+LaunchDelayGiveWeapons(client, Float:delay = 0.2)
 {
-    CreateTimer(0.2, DelayGiveWeapons, client);
+    CreateTimer(delay, DelayGiveWeapons, client);
 }
 
 public Action:DelayGiveWeapons(Handle:timer, any:client)

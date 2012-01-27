@@ -28,7 +28,7 @@ InitCVARs()
     new Handle:cv_enabled 	= CreateConVar("wm_enabled",		"1", "Enables/disables PVKII Weapons Master.", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 0.0, true, 1.0);
     new Handle:cv_debug 	= CreateConVar("wm_debug",		"0", "Debug mode.", FCVAR_PLUGIN, true, 0.0, true, 1.0);
     new Handle:cv_killstolevel  = CreateConVar("wm_killstolevel",	"1", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 0.0, true, 1.0);
-    new Handle:cv_respawntimer   = CreateConVar("wm_respawntimer", 	"3", "Number of seconds between respawns", FCVAR_NOTIFY | FCVAR_PLUGIN, true, -1.0, true, 20.0);
+    new Handle:cv_respawntimer  = CreateConVar("wm_respawntimer", 	"3", "Number of seconds between respawns", FCVAR_NOTIFY | FCVAR_PLUGIN, true, -1.0, true, 20.0);
     new Handle:cv_health        = CreateConVar("wm_health",		"100", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 1.0, false, 1.0);
     new Handle:cv_armor         = CreateConVar("wm_armor",		"100", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 1.0, false, 1.0);
     new Handle:cv_killsforspree = CreateConVar("wm_killsforspree",	"3", "Number of kills for a player to enter a killing spree. 0 to disable", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 0.0, true, 10.0);
@@ -54,7 +54,7 @@ InitCVARs()
     cvar_health 	= GetConVarInt(cv_health);
     cvar_armor  	= GetConVarInt(cv_armor);
     cvar_killsforspree	= GetConVarInt(cv_killsforspree);
-    cvar_warmuplength   = GetConVarInt(cv_killsforspree);
+    cvar_warmuplength   = GetConVarInt(cv_warmuplength);
     cvar_movespeed 	= GetConVarFloat(cv_movespeed);
     cvar_spreemovespeed	= GetConVarFloat(cv_spreemovespeed);
 }

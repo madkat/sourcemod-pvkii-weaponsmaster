@@ -35,6 +35,7 @@ public OnPluginStart() {
     HookEvent("player_death", OnPlayerDeath);
     HookEvent("player_changeteam", OnPlayerChangeTeam);
     HookEvent("player_changeclass", OnPlayerChangeClass);
+    HookEvent("player_special", OnPlayerSpecial);
 
     HookEvent("round_end",			OnBlanketDisabledEvent, EventHookMode_Pre);
     HookEvent("gamemode_roundrestart",		OnBlanketDisabledEvent, EventHookMode_Pre);
@@ -74,7 +75,7 @@ public Action:OnBlanketDisabledEvent(Handle:event, const String:name[], bool:don
 
 public Action:OnGameModeFirstRoundBegin(Handle:event, const String:name[], bool:dontBroadcast)
 {
-    //LaunchWarmupTimer();
+    LaunchWarmupTimer();
     Debug("FirstRoundBegins");
     return Plugin_Continue;
 }
@@ -82,8 +83,8 @@ public Action:OnGameModeFirstRoundBegin(Handle:event, const String:name[], bool:
 public Action:OnGameModeFirstRoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
 {
     Debug("FirstRoundEnds");
-    if (cvar_warmuplength > 0) {
-	return Plugin_Handled;
+    if (WarmupRemaining > 0) {
+        WarmupRemaining = 0;
     }
     return Plugin_Continue;
 }
@@ -213,16 +214,22 @@ public OnPlayerChangeClass(Handle:event, const String:name[], bool:dontBroadcast
     ClientPlayerDead[client] = 1;
 }
 
-public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
+public OnPlayerSpecial(Handle:event, const String:name[], bool:dontBroadcast) {
     new client = GetClientOfUserId(GetEventInt(event, "userid"));
-    new attacker = GetClientOfUserId(GetEventInt(event, "attacker"));
-    if (!attacker || !IsPlayerAlive(attacker) || !IsClientInGame(attacker) || !cvar_enabled)
+    if (client < 0) {
+    }
+}
+
+public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
+    new victim = GetClientOfUserId(GetEventInt(event, "userid"));
+    new client = GetClientOfUserId(GetEventInt(event, "attacker"));
+    if (!client || !IsPlayerAlive(client) || !IsClientInGame(client) || !cvar_enabled)
 	return;
 
-    ClientPlayerDead[client] = 1;
+    ClientPlayerDead[victim] = 1;
 
     decl String:weapon[W_STRING_LEN];
     GetEventString(event, "weapon", weapon, W_STRING_LEN);
     
-    TryLevelUp(attacker, client, weapon);
+    TryLevelUp(client, victim, weapon);
 }
