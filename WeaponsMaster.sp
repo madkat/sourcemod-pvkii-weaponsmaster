@@ -223,8 +223,9 @@ public OnPlayerSpecial(Handle:event, const String:name[], bool:dontBroadcast) {
 	return;
 
     Debug("Player special, attempting to retrieve client weapon");
-    decl String:weapon[W_STRING_LEN] = "";
-    GetClientWeapon(client, weapon, W_STRING_LEN);
+    decl String:weapon[1024];
+    GetClientWeapon(client, weapon, 1024);
+    Debug(weapon);
     
     ClientPlayerSpecial[client] = 0;
 }
