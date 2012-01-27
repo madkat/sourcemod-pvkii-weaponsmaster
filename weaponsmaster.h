@@ -8,6 +8,7 @@ new String:LeaderName[MAX_NAME_LENGTH];
 new bool:GameWon = false;
 
 new WarmupRemaining = 0;
+new bool:WarmupInProgress = false;
 
 new ClientUserID[MAXPLAYERS + 1] = {0, ...};
 new ClientPlayerLevel[MAXPLAYERS + 1] = {0, ...};

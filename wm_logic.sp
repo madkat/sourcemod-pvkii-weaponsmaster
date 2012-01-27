@@ -42,7 +42,7 @@ TryLevelUp(client, victim, String:weapon[W_STRING_LEN])
 
 ChangeClientLevel(client, difference)
 {
-    if (!cvar_enabled || !difference /* || VictoryCondition || WarmupRound*/) {
+    if (!cvar_enabled || !difference || GameWon || WarmupInProgress) {
         return;
     }
 

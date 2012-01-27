@@ -77,6 +77,7 @@ public Action:OnGameModeFirstRoundBegin(Handle:event, const String:name[], bool:
 {
     LaunchWarmupTimer();
     Debug("FirstRoundBegins");
+    WarmupInProgress = true;
     return Plugin_Continue;
 }
 
@@ -86,6 +87,7 @@ public Action:OnGameModeFirstRoundEnd(Handle:event, const String:name[], bool:do
     if (WarmupRemaining > 0) {
         WarmupRemaining = 0;
     }
+    WarmupInProgress = false;
     return Plugin_Continue;
 }
 
