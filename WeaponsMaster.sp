@@ -126,6 +126,7 @@ public OnClientPutInServer(client) {
 	ClientSpreeEffects[client] = 0;
         ClientPlayerDead[client] = 1;
 	ClientFirstJoin[client] = 1;
+        ClientPlayerSpecial[client] = 0;
 
 	SetEntData(client, h_iMaxHealth,	-1, 4, true);
 	SetEntData(client, h_iHealth,		-1, 4, true);
@@ -218,8 +219,14 @@ public OnPlayerChangeClass(Handle:event, const String:name[], bool:dontBroadcast
 
 public OnPlayerSpecial(Handle:event, const String:name[], bool:dontBroadcast) {
     new client = GetClientOfUserId(GetEventInt(event, "userid"));
-    if (client < 0) {
-    }
+    if (!client || !IsPlayerAlive(client) || !IsClientInGame(client) || !cvar_enabled)
+	return;
+
+    Debug("Player special, attempting to retrieve client weapon");
+    decl String:weapon[W_STRING_LEN] = "";
+    GetClientWeapon(client, weapon, W_STRING_LEN);
+    
+    ClientPlayerSpecial[client] = 0;
 }
 
 public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {

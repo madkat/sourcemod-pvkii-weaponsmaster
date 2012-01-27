@@ -72,6 +72,11 @@ ChangeClientLevel(client, difference)
     LaunchDelayGiveWeapons(client);
 }
 
+HandlePlayerSpecial()
+{
+
+}
+
 LaunchChangeLevel()
 {
     CreateTimer(5.0, DelayChangeLevel);
