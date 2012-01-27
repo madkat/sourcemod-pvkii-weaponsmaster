@@ -142,7 +142,7 @@ public Action:RespawnTick(Handle:timer, any:client)
 
 LaunchDelayGiveWeapons(client)
 {
-    CreateTimer(0.3, DelayGiveWeapons, client);
+    CreateTimer(0.2, DelayGiveWeapons, client);
 }
 
 public Action:DelayGiveWeapons(Handle:timer, any:client)
