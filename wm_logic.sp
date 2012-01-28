@@ -21,7 +21,12 @@ TryLevelUp(client, victim, String:weapon[W_STRING_LEN])
         ClientKillCounter[client]++;
         ClientSpreeCounter[client]++;
         if (ClientKillCounter[client] >= cvar_killstolevel) {
-            ChangeClientLevel(client, 1);
+            if (ClientPlayerSpecial[client] == 1) {
+                ClientPlayerSpecial[client] = 2;
+            }
+            else {
+                ChangeClientLevel(client, 1);
+            }
         }
     }
     else if (StrEqual(weapon, "prop_physics") || StrEqual(weapon, "prop_physics_multiplayer")) {
@@ -55,6 +60,7 @@ ChangeClientLevel(client, difference)
         return;
         //Suicide, no further action needed
     }
+
     PlaySound(client, Sounds:Up);
     
     if (level >= W_MAX_LEVEL) {
@@ -70,11 +76,6 @@ ChangeClientLevel(client, difference)
 
     RecalculateLeader(client, old_level, level);
     LaunchDelayGiveWeapons(client);
-}
-
-HandlePlayerSpecial()
-{
-
 }
 
 LaunchChangeLevel()
@@ -145,6 +146,25 @@ public Action:RespawnTick(Handle:timer, any:client)
             CreateTimer(1.0, RespawnTick, client);
         }
     }
+}
+
+LaunchHandleSpecial(client)
+{
+    CreateTimer(6.0, HandleSpecial, client);
+}
+
+public Action:HandleSpecial(Handle:timer, any:client)
+{
+    if (!client || !IsClientInGame(client))
+        return;
+
+    if (ClientPlayerSpecial[client] == 2) {
+        // Make sure to set player special back to 0,
+        // otherwise the ChangeLevel will ignore us.
+        ChangeClientLevel(client, 1);
+    }
+
+    ClientPlayerSpecial[client] = 0;
 }
 
 LaunchDelayGiveWeapons(client, Float:delay = 0.2)

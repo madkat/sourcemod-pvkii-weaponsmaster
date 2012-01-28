@@ -32,6 +32,7 @@ public OnPluginStart() {
 	Event Hooks
     */
     HookEvent("player_spawn", OnPlayerSpawn);
+    HookEvent("player_death", OnPrePlayerDeath, EventHookMode_Pre);
     HookEvent("player_death", OnPlayerDeath);
     HookEvent("player_changeteam", OnPlayerChangeTeam);
     HookEvent("player_changeclass", OnPlayerChangeClass);
@@ -222,12 +223,26 @@ public OnPlayerSpecial(Handle:event, const String:name[], bool:dontBroadcast) {
     if (!client || !IsPlayerAlive(client) || !IsClientInGame(client) || !cvar_enabled)
 	return;
 
-    Debug("Player special, attempting to retrieve client weapon");
-    decl String:weapon[1024];
-    GetClientWeapon(client, weapon, 1024);
-    Debug(weapon);
-    
-    ClientPlayerSpecial[client] = 0;
+    decl String:weapon[W_STRING_LEN];
+    GetClientWeapon(client, weapon, W_STRING_LEN);
+
+    if (StrEqual(WeaponNames[Weapon:GestirSpear], weapon)
+        || StrEqual(WeaponNames[Weapon:HuscarlSwordShield], weapon)) {
+        ClientPlayerSpecial[client] = 1;
+        LaunchHandleSpecial(client);
+    }
+}
+
+public Action:OnPrePlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
+    new victim = GetClientOfUserId(GetEventInt(event, "userid"));
+    if (!victim || !IsClientInGame(victim))
+        return Plugin_Continue;
+
+    if (ClientPlayerSpecial[victim] == 2) {
+        HandleSpecial(Handle:0, victim);
+    }
+
+    return Plugin_Continue;
 }
 
 public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
