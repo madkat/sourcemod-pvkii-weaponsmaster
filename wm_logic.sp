@@ -1,3 +1,22 @@
+/*******************************************************************************
+*   This file is part of WeaponsMaster.
+*
+*   WeaponsMaster is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   WeaponsMaster is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with WeaponsMaster.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Copyright (c) 2010-2012, Marty "MadKat" Lewis
+*******************************************************************************/
+
 TryLevelUp(client, victim, String:weapon[W_STRING_LEN])
 {
     if (cvar_warmuplength > 0 && WarmupRemaining > 0) {
@@ -17,7 +36,9 @@ TryLevelUp(client, victim, String:weapon[W_STRING_LEN])
 
     new level = ClientPlayerLevel[client];
     new Weapon:weapon_id = WeaponOrder[level];
-    if (StrEqual(weapon,WeaponNames[weapon_id])) {
+    if (StrEqual(weapon, WeaponNames[weapon_id]) ||
+        (WeaponOrder[level] == Weapon:CaptainParrot && StrEqual(weapon, WeaponNames[Weapon:CaptainPunch]))) {
+        // If they killed with the weapon from this level
         ClientKillCounter[client]++;
         ClientSpreeCounter[client]++;
         if (ClientKillCounter[client] >= cvar_killstolevel) {
@@ -30,6 +51,7 @@ TryLevelUp(client, victim, String:weapon[W_STRING_LEN])
         }
     }
     else if (StrEqual(weapon, "prop_physics") || StrEqual(weapon, "prop_physics_multiplayer")) {
+        // If they landed a kill with a trap
         ChangeClientLevel(client, 1);
     }
     else {

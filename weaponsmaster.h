@@ -1,3 +1,22 @@
+/*******************************************************************************
+*   This file is part of WeaponsMaster.
+*
+*   WeaponsMaster is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   WeaponsMaster is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with WeaponsMaster.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Copyright (c) 2010-2012, Marty "MadKat" Lewis
+*******************************************************************************/
+
 #define PL_VERSION "0.1"
 #define SERVER_TAG "wm"
 
@@ -29,6 +48,7 @@ new ClientPlayerSpecial[MAXPLAYERS + 1] = {0, ...};
 #define W_SPCATK	2
 #define W_AMMO_QTY	3
 
+#define W_TOTAL_COUNT   20
 #define W_MAX_LEVEL	19
 
 #define W_STRING_LEN    20
@@ -52,10 +72,11 @@ enum Weapon {
     GestirJavelin,
     HuscarlThrowingAxe,
     SkirmisherKeg,
-    CaptainParrot
+    CaptainParrot,
+    CaptainPunch
 };
 
-public const String:WeaponNames[W_MAX_LEVEL][W_STRING_LEN] = {
+public const String:WeaponNames[W_TOTAL_COUNT][W_STRING_LEN] = {
     "archersword",
     "axesword",
     "bigaxe",
@@ -74,7 +95,8 @@ public const String:WeaponNames[W_MAX_LEVEL][W_STRING_LEN] = {
     "javelin",
     "throwaxe",
     "powderkeg",
-    "parrot"
+    "parrot",
+    "punch_cpt"
 };
 
 new Weapon:WeaponOrder[W_MAX_LEVEL] = {
