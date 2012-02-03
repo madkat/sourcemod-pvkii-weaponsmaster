@@ -48,6 +48,7 @@ new ClientPlayerSpecial[MAXPLAYERS + 1] = {0, ...};
 #define W_SPCATK	2
 #define W_AMMO_QTY	3
 
+#define W_TOTAL_COUNT   20
 #define W_MAX_LEVEL	19
 
 #define W_STRING_LEN    20
@@ -71,10 +72,11 @@ enum Weapon {
     GestirJavelin,
     HuscarlThrowingAxe,
     SkirmisherKeg,
-    CaptainParrot
+    CaptainParrot,
+    CaptainPunch
 };
 
-public const String:WeaponNames[W_MAX_LEVEL][W_STRING_LEN] = {
+public const String:WeaponNames[W_TOTAL_COUNT][W_STRING_LEN] = {
     "archersword",
     "axesword",
     "bigaxe",
@@ -93,7 +95,8 @@ public const String:WeaponNames[W_MAX_LEVEL][W_STRING_LEN] = {
     "javelin",
     "throwaxe",
     "powderkeg",
-    "parrot"
+    "parrot",
+    "punch_cpt"
 };
 
 new Weapon:WeaponOrder[W_MAX_LEVEL] = {

@@ -36,7 +36,8 @@ TryLevelUp(client, victim, String:weapon[W_STRING_LEN])
 
     new level = ClientPlayerLevel[client];
     new Weapon:weapon_id = WeaponOrder[level];
-    if (StrEqual(weapon,WeaponNames[weapon_id])) {
+    if (StrEqual(weapon, WeaponNames[weapon_id]) ||
+        (WeaponOrder[level] == Weapon:CaptainParrot && StrEqual(weapon, WeaponNames[Weapon:CaptainPunch]))) {
         // If they killed with the weapon from this level
         ClientKillCounter[client]++;
         ClientSpreeCounter[client]++;
