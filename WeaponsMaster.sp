@@ -1,3 +1,21 @@
+/*******************************************************************************
+*   This file is part of WeaponsMaster.
+*
+*   WeaponsMaster is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   WeaponsMaster is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with WeaponsMaster.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Copyright (c) 2010-2012, Marty "MadKat" Lewis
+*******************************************************************************/
 
 #pragma semicolon 1
 
@@ -38,15 +56,15 @@ public OnPluginStart() {
     HookEvent("player_changeclass", OnPlayerChangeClass);
     HookEvent("player_special", OnPlayerSpecial);
 
-    HookEvent("round_end",			OnBlanketDisabledEvent, EventHookMode_Pre);
-    HookEvent("gamemode_roundrestart",		OnBlanketDisabledEvent, EventHookMode_Pre);
-    HookEvent("gamemode_territory_capture",	OnBlanketDisabledEvent, EventHookMode_Pre);
-    HookEvent("gamemode_territory_guard",	OnBlanketDisabledEvent, EventHookMode_Pre);
-    HookEvent("gamemode_territory_contested",	OnBlanketDisabledEvent, EventHookMode_Pre);
-    HookEvent("game_end", 			OnBlanketDisabledEvent, EventHookMode_Pre);
-    HookEvent("grail_pickup", 			OnBlanketDisabledEvent, EventHookMode_Pre);
-    HookEvent("chest_respawn", 			OnBlanketDisabledEvent, EventHookMode_Pre);
-    HookEvent("chest_pickup", 			OnBlanketDisabledEvent, EventHookMode_Pre);
+    HookEvent("round_end",			OnUnhandledEvent, EventHookMode_Pre);
+    HookEvent("gamemode_roundrestart",		OnUnhandledEvent, EventHookMode_Pre);
+    HookEvent("gamemode_territory_capture",	OnUnhandledEvent, EventHookMode_Pre);
+    HookEvent("gamemode_territory_guard",	OnUnhandledEvent, EventHookMode_Pre);
+    HookEvent("gamemode_territory_contested",	OnUnhandledEvent, EventHookMode_Pre);
+    HookEvent("game_end", 			OnUnhandledEvent, EventHookMode_Pre);
+    HookEvent("grail_pickup", 			OnUnhandledEvent, EventHookMode_Pre);
+    HookEvent("chest_respawn", 			OnUnhandledEvent, EventHookMode_Pre);
+    HookEvent("chest_pickup", 			OnUnhandledEvent, EventHookMode_Pre);
 
     HookEvent("gamemode_firstround_wait_begin",	OnGameModeFirstRoundBegin, EventHookMode_Pre);
     HookEvent("gamemode_firstround_wait_end",	OnGameModeFirstRoundEnd, EventHookMode_Pre);
@@ -68,9 +86,8 @@ Debug(String:message[1024])
     }
 }
 
-public Action:OnBlanketDisabledEvent(Handle:event, const String:name[], bool:dontBroadcast)
+public Action:OnDisabledEvent(Handle:event, const String:name[], bool:dontBroadcast)
 {
-    //Debug("Eating a %s event", name);
     return Plugin_Handled;
 }
 
@@ -161,7 +178,7 @@ public OnPlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast) {
     if (!client || !IsPlayerAlive(client) || !IsClientInGame(client) || !cvar_enabled)
 	return;
 
-    if (!ClientFirstJoin[client] || !ClientPlayerDead[client]) {
+    if (!ClientFirstJoin[client] && !ClientPlayerDead[client]) {
         if (!IsFakeClient(client)) {
             PrintLevelInfo(client);
         }
@@ -234,6 +251,9 @@ public OnPlayerSpecial(Handle:event, const String:name[], bool:dontBroadcast) {
 }
 
 public Action:OnPrePlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
+    if (!cvar_enabled) {
+        return Plugin_Continue;
+    }
     new victim = GetClientOfUserId(GetEventInt(event, "userid"));
     if (!victim || !IsClientInGame(victim))
         return Plugin_Continue;
