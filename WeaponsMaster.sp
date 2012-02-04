@@ -161,6 +161,8 @@ public OnMapStart() {
     LeaderName = "";
     GameWon = false;
 
+    ReadConfig();
+
     if (EventSounds[Welcome][0] == '\0') {
         InitSounds();
     }

@@ -107,12 +107,9 @@ ReadConfig()
     {
         return;
     }
-    
-    decl String:ConfigDirName[PLATFORM_MAX_PATH];
-    GetConVarString(g_Cvar_CfgDirName, ConfigDirName, sizeof(ConfigDirName));
 
     decl String:ConfigDir[PLATFORM_MAX_PATH];
-    FormatEx(ConfigDir, sizeof(ConfigDir), "cfg\\%s", ConfigDirName);
+    FormatEx(ConfigDir, sizeof(ConfigDir), "cfg\\weaponsmaster");
 
     decl String:ConfigFile[PLATFORM_MAX_PATH], String:EquipFile[PLATFORM_MAX_PATH];
     decl String:Error[PLATFORM_MAX_PATH + 64];
@@ -124,10 +121,11 @@ ReadConfig()
         ConfigCount++;
         PrintToServer("[WeaponsMaster] Loading weaponsmaster.config.txt config file");
     } else {
-        FormatEx(Error, sizeof(Error), "[WeaponsMaster] FATAL *** ERROR *** can not find %s", ConfigFile);
-        SetFailState(Error);
+        FormatEx(Error, sizeof(Error), "[WeaponsMaster] *** ERROR *** can not find %s, using cvars", ConfigFile);
+        //SetFailState(Error);
     }
     
+    /*
     FormatEx(EquipFile, sizeof(EquipFile), "%s\\weaponsmaster.equip.txt", ConfigDir);
     
     if(FileExists(EquipFile))
@@ -136,8 +134,9 @@ ReadConfig()
         PrintToServer("[WeaponsMaster] Loading weaponsmaster.equip.txt config file");
     } else {
         FormatEx(Error, sizeof(Error), "[WeaponsMaster] FATAL *** ERROR *** can not find %s", EquipFile);
-        SetFailState(Error);
-    }
+        //SetFailState(Error);
+    } 
+    */ 
     
     /* Build map config and map prefix config*/
 
@@ -231,9 +230,9 @@ static InternalReadConfig(const String:path[])
         decl String:buffer[64];
         if (SMC_GetErrorString(status, buffer, sizeof(buffer)))
         {
-            PrintToServer("%s", buffer);
+            PrintToServer("[WeaponsMaster] %s", buffer);
         } else {
-            PrintToServer("Fatal parse error");
+            PrintToServer("[WeaponsMaster] Fatal parse error");
         }
     }
 }
@@ -242,9 +241,11 @@ public SMCResult:ReadConfig_NewSection(Handle:smc, const String:name[], bool:opt
 {
     if(name[0])
     {
+        /*
         Call_StartForward(FwdConfigNewSection);
         Call_PushString(name);
         Call_Finish();
+        */
     }
 
     return SMCParse_Continue;
@@ -258,10 +259,12 @@ public SMCResult:ReadConfig_KeyValue(Handle:smc,
 {
     if(key[0] && value[0])
     {
+        /*
         Call_StartForward(FwdConfigKeyValue);
         Call_PushString(key);
         Call_PushString(value);
         Call_Finish();
+        */
     }
 
     return SMCParse_Continue;
@@ -274,12 +277,16 @@ public SMCResult:ReadConfig_EndSection(Handle:smc)
 
 public ReadConfig_ParseEnd(Handle:smc, bool:halted, bool:failed)
 {
+    /*
     Call_StartForward(FwdConfigParseEnd);
-    Call_Finish();
+    Call_Finish(); 
+    */ 
     
     if(ConfigCount == ++ParseConfigCount)
     {
+        /*
         Call_StartForward(FwdConfigEnd);
         Call_Finish();
+        */
     }
 }

@@ -45,3 +45,7 @@ enum Sounds
 }
 
 new String:EventSounds[Sounds:MaxSounds][64];
+
+new Handle:ConfigParser;
+new ParseConfigCount;
+new ConfigCount = 0;

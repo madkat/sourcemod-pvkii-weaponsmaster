@@ -26,7 +26,9 @@ new Handle:hGiveAmmo;
 // RemoveAllItems(bool remove_suit)
 new Handle:hRemoveAllItems;
 // ForceRespawn(void)
-new Handle:hForceRespawn;
+//new Handle:hForceRespawn;
+// Spawn(void)
+new Handle:hSpawn;
 
 new h_iMaxHealth;
 new h_iHealth;

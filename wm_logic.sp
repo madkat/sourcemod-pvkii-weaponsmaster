@@ -160,9 +160,9 @@ public Action:RespawnTick(Handle:timer, any:client)
 {
     if (IsClientInGame(client)) {
         ClientSpawnTimer[client]++;
-        if (ClientSpawnTimer[client] > cvar_respawntimer) {
+        if (ClientSpawnTimer[client] >= cvar_respawntimer) {
             ClientSpawnTimer[client] = 0;
-            ForceRespawn(client);
+            ForceSpawn(client);
         }
         else {
             CreateTimer(1.0, RespawnTick, client);

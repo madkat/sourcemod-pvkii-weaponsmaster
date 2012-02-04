@@ -45,9 +45,15 @@ InitSDKCalls()
     PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain);
     hRemoveAllItems = EndPrepSDKCall();
 
+    /*
     StartPrepSDKCall(SDKCall_Player);
     PrepSDKCall_SetFromConf(conf, SDKConf_Virtual, "ForceRespawn");
-    hForceRespawn = EndPrepSDKCall();
+    hForceRespawn = EndPrepSDKCall(); 
+    */ 
+
+    StartPrepSDKCall(SDKCall_Player);
+    PrepSDKCall_SetFromConf(conf, SDKConf_Virtual, "Spawn");
+    hSpawn = EndPrepSDKCall();
     
     CloseHandle(conf);
 
@@ -70,13 +76,24 @@ RemoveAllWeapons(client)
     SDKCall(hRemoveAllItems, client, false);
 }
 
+/*
 ForceRespawn(client)
 {
-    if (!IsClientInGame(client) || !IsPlayerAlive(client)) {
+    if (!IsClientInGame(client)) {
         return;
     }
 
     SDKCall(hForceRespawn, client, false);
+}
+*/
+
+ForceSpawn(client)
+{
+    if (!IsClientInGame(client)) {
+        return;
+    }
+
+    SDKCall(hSpawn, client, false);
 }
 
 GiveWeapon(client, String:weapon_name[W_STRING_LEN])
