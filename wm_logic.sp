@@ -229,7 +229,7 @@ public GiveWeapons(client)
         EquipWeapon(client, weapon_object);
 
         weapon_object = GiveWeapon(client, WeaponNames[Weapon:ArcherSword]);
-    	if (weapon_object > -1) {
+    	if (weapon_object > 0) {
     	    EquipWeapon(client, weapon_object);
     	}
         PrintToChat(client, "Warmup round is in progress");
@@ -240,7 +240,7 @@ public GiveWeapons(client)
     new Weapon:weapon_id = WeaponOrder[level];
 
     weapon_object = GiveWeapon(client, WeaponNames[weapon_id]);
-    if (weapon_object > -1) {
+    if (weapon_object > 0) {
         if (weapon_properties[weapon_id][W_AMMO_QTY] > -1) {
     	    new ammo_type = GetEntProp(weapon_object, Prop_Data, "m_iPrimaryAmmoType", 4);
     	    GiveAmmo(client, weapon_properties[weapon_id][W_AMMO_QTY], ammo_type);
@@ -256,7 +256,7 @@ public GiveWeapons(client)
         || weapon_id == Weapon:GestirSwordShield) {
     	// Give an archer sword
         weapon_object = GiveWeapon(client, WeaponNames[Weapon:ArcherSword]);
-    	if (weapon_object > -1) {
+    	if (weapon_object > 0) {
     	    EquipWeapon(client, weapon_object);
     	}
     }
