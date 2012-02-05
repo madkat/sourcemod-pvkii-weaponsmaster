@@ -114,7 +114,7 @@ public Action:OnUnhandledEvent(Handle:event, const String:name[], bool:dontBroad
 }
 
 public Action:AdminCommand_LevelPlayer(client, args) {
-    TryLevelUp(client, 0, WeaponNames[ClientPlayerLevel[client]]);
+    TryLevelUp(client, 0, WeaponNames[ClientPlayerLevel[client]], false);
     return Plugin_Handled;
 }
 
@@ -241,12 +241,15 @@ public OnPlayerSpecial(Handle:event, const String:name[], bool:dontBroadcast) {
     if (!client || !IsPlayerAlive(client) || !IsClientInGame(client) || !cvar_enabled)
 	return;
 
+    PrintToServer("[WeaponsMaster] Player used a special");
+
     decl String:weapon[W_STRING_LEN];
     GetClientWeapon(client, weapon, W_STRING_LEN);
 
     if (StrEqual(WeaponNames[Weapon:GestirSpear], weapon)
         || StrEqual(WeaponNames[Weapon:HuscarlSwordShield], weapon)
         || StrEqual(WeaponNames[Weapon:SkirmisherCutlass], weapon)) {
+        PrintToServer("[WeaponsMaster] Spear, shield or cutlass special used");
         ClientPlayerSpecial[client] = 1;
         LaunchHandleSpecial(client);
     }
@@ -255,6 +258,7 @@ public OnPlayerSpecial(Handle:event, const String:name[], bool:dontBroadcast) {
 public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
     new victim = GetClientOfUserId(GetEventInt(event, "userid"));
     new client = GetClientOfUserId(GetEventInt(event, "attacker"));
+    new special = GetEventBool(event, "special");
     if (!client || !IsPlayerAlive(client) || !IsClientInGame(client) || !cvar_enabled)
 	return;
 
@@ -267,5 +271,5 @@ public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
     decl String:weapon[W_STRING_LEN];
     GetEventString(event, "weapon", weapon, W_STRING_LEN);
     
-    TryLevelUp(client, victim, weapon);
+    TryLevelUp(client, victim, weapon, special);
 }

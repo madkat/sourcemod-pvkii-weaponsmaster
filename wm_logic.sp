@@ -17,7 +17,7 @@
 *   Copyright (c) 2010-2012, Marty "MadKat" Lewis
 *******************************************************************************/
 
-TryLevelUp(client, victim, String:weapon[W_STRING_LEN])
+TryLevelUp(client, victim, String:weapon[W_STRING_LEN], special)
 {
     if (cvar_warmuplength > 0 && WarmupRemaining > 0) {
         LaunchDelayGiveWeapons(client);
@@ -42,7 +42,7 @@ TryLevelUp(client, victim, String:weapon[W_STRING_LEN])
         ClientKillCounter[client]++;
         ClientSpreeCounter[client]++;
         if (ClientKillCounter[client] >= cvar_killstolevel) {
-            if (ClientPlayerSpecial[client] == 1) {
+            if (special && ClientPlayerSpecial[client] > 0) {
                 ClientPlayerSpecial[client] = 2;
             }
             else {
@@ -180,9 +180,12 @@ public Action:HandleSpecial(Handle:timer, any:client)
     if (!client || !IsClientInGame(client))
         return;
 
+    PrintToServer("[WeaponsMaster] Special handle hit");
+
     if (ClientPlayerSpecial[client] == 2) {
         // Make sure to set player special back to 0,
         // otherwise the ChangeLevel will ignore us.
+        PrintToServer("[WeaponsMaster] Giving levelup bonus for special");
         ChangeClientLevel(client, 1);
     }
 
