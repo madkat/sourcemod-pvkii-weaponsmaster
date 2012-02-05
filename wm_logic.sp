@@ -42,6 +42,7 @@ TryLevelUp(client, victim, String:weapon[W_STRING_LEN], special)
         ClientKillCounter[client]++;
         ClientSpreeCounter[client]++;
         if (ClientKillCounter[client] >= cvar_killstolevel) {
+            ClientKillCounter[client] = 0;
             if (special && ClientPlayerSpecial[client] > 0) {
                 ClientPlayerSpecial[client] = 2;
             }
