@@ -52,7 +52,6 @@ new ClientPlayerSpecial[MAXPLAYERS + 1] = {0, ...};
 #define W_MAX_LEVEL	19
 
 #define W_STRING_LEN    20
-#define WE_STRING_LEN   27
 
 enum Weapon {
     ArcherSword = 0,
@@ -98,29 +97,6 @@ public const String:WeaponNames[W_TOTAL_COUNT][W_STRING_LEN] = {
     "powderkeg",
     "parrot",
     "punch_cpt"
-};
-
-public const String:ExtendedWeaponNames[W_TOTAL_COUNT][WE_STRING_LEN] = {
-    "weapon_archersword",
-    "weapon_axesword",
-    "weapon_bigaxe",
-    "weapon_cutlass",
-    "weapon_cutlass2",
-    "weapon_seaxshield",
-    "weapon_spear",
-    "weapon_swordshield",
-    "weapon_twoaxe",
-    "weapon_twosword",
-    "weapon_vikingshield",
-    "weapon_blunderbuss",
-    "weapon_flintlock",
-    "weapon_crossbow",
-    "weapon_longbow",
-    "weapon_javelin",
-    "weapon_throwaxe",
-    "weapon_powderkeg",
-    "weapon_parrot",
-    "weapon_punch_cpt"
 };
 
 new Weapon:WeaponOrder[W_MAX_LEVEL] = {

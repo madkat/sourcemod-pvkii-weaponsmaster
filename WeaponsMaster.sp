@@ -243,13 +243,11 @@ public OnPlayerSpecial(Handle:event, const String:name[], bool:dontBroadcast) {
 
     decl String:weapon[W_STRING_LEN];
     GetClientWeapon(client, weapon, W_STRING_LEN);
+    new pos = FindCharInString(weapon, '_') + 1;
 
-    PrintToServer("[WeaponsMaster] Player used a special with weapon %s", weapon);
-
-    if (StrEqual(ExtendedWeaponNames[Weapon:GestirSpear], weapon)
-        || StrEqual(ExtendedWeaponNames[Weapon:HuscarlSwordShield], weapon)
-        || StrEqual(ExtendedWeaponNames[Weapon:SkirmisherCutlass], weapon)) {
-        PrintToServer("[WeaponsMaster] Spear, shield or cutlass special used");
+    if (StrEqual(WeaponNames[Weapon:GestirSpear], weapon[pos])
+        || StrEqual(WeaponNames[Weapon:HuscarlSwordShield], weapon[pos])
+        || StrEqual(WeaponNames[Weapon:SkirmisherCutlass], weapon[pos])) {
         ClientPlayerSpecial[client] = 1;
         LaunchHandleSpecial(client);
     }

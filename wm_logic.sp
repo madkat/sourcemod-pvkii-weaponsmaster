@@ -172,7 +172,7 @@ public Action:RespawnTick(Handle:timer, any:client)
 
 LaunchHandleSpecial(client)
 {
-    CreateTimer(6.0, HandleSpecial, client);
+    CreateTimer(5.0, HandleSpecial, client);
 }
 
 public Action:HandleSpecial(Handle:timer, any:client)
@@ -180,12 +180,9 @@ public Action:HandleSpecial(Handle:timer, any:client)
     if (!client || !IsClientInGame(client))
         return;
 
-    PrintToServer("[WeaponsMaster] Special handle hit");
-
     if (ClientPlayerSpecial[client] == 2) {
         // Make sure to set player special back to 0,
         // otherwise the ChangeLevel will ignore us.
-        PrintToServer("[WeaponsMaster] Giving levelup bonus for special");
         ChangeClientLevel(client, 1);
     }
 
@@ -207,7 +204,7 @@ public Action:DelayGiveWeapons(Handle:timer, any:client)
 
 DelayedGiveWeapons(client)
 {
-    if (!IsClientInGame(client) || !IsPlayerAlive(client)) {
+    if (!client || !IsClientInGame(client) || !IsPlayerAlive(client)) {
         return;
     }
     RemoveAllWeapons(client);
