@@ -241,10 +241,10 @@ public OnPlayerSpecial(Handle:event, const String:name[], bool:dontBroadcast) {
     if (!client || !IsPlayerAlive(client) || !IsClientInGame(client) || !cvar_enabled)
 	return;
 
-    PrintToServer("[WeaponsMaster] Player used a special");
-
     decl String:weapon[W_STRING_LEN];
     GetClientWeapon(client, weapon, W_STRING_LEN);
+
+    PrintToServer("[WeaponsMaster] Player used a special with weapon %s", weapon);
 
     if (StrEqual(WeaponNames[Weapon:GestirSpear], weapon)
         || StrEqual(WeaponNames[Weapon:HuscarlSwordShield], weapon)
