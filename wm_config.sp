@@ -83,6 +83,7 @@ public cvHookEnabled(Handle:cvar, const String:oldVal[], const String:newVal[]) 
 	RemoveServerTag(SERVER_TAG);
     } else {
 	AddServerTag(SERVER_TAG);
+        OnMapStart();
     }
 }
 public cvHookDebug(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_debug = GetConVarBool(cvar); }

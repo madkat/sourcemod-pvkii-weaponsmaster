@@ -96,7 +96,7 @@ public const String:WeaponNames[W_TOTAL_COUNT][W_STRING_LEN] = {
     "throwaxe",
     "powderkeg",
     "parrot",
-    "punch_cpt"
+    "hook"
 };
 
 new Weapon:WeaponOrder[W_MAX_LEVEL] = {
