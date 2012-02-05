@@ -27,11 +27,19 @@ InitSDKCalls()
     PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain);
     PrepSDKCall_SetReturnInfo(SDKType_CBaseEntity, SDKPass_Plain);
     hGiveNamedItem = EndPrepSDKCall();
+
+    if (hGiveNamedItem == INVALID_HANDLE) {
+        PrintToServer("[WeaponsMaster] WARNING: Could not find SDK method: GiveNamedItem");
+    }
     
     StartPrepSDKCall(SDKCall_Player);
     PrepSDKCall_SetFromConf(conf, SDKConf_Virtual, "Weapon_Equip");
     PrepSDKCall_AddParameter(SDKType_CBaseEntity, SDKPass_Pointer);
     hWeapon_Equip = EndPrepSDKCall();
+
+    if (hWeapon_Equip == INVALID_HANDLE) {
+        PrintToServer("[WeaponsMaster] WARNING: Could not find SDK method: Weapon_Equip");
+    }
 
     StartPrepSDKCall(SDKCall_Player);
     PrepSDKCall_SetFromConf(conf, SDKConf_Virtual, "GiveAmmo");
@@ -40,10 +48,18 @@ InitSDKCalls()
     PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain);
     hGiveAmmo = EndPrepSDKCall();
 
+    if (hGiveAmmo == INVALID_HANDLE) {
+        PrintToServer("[WeaponsMaster] WARNING: Could not find SDK method: GiveAmmo");
+    }
+
     StartPrepSDKCall(SDKCall_Player);
     PrepSDKCall_SetFromConf(conf, SDKConf_Virtual, "RemoveAllItems");
     PrepSDKCall_AddParameter(SDKType_PlainOldData, SDKPass_Plain);
     hRemoveAllItems = EndPrepSDKCall();
+
+    if (hRemoveAllItems == INVALID_HANDLE) {
+        PrintToServer("[WeaponsMaster] WARNING: Could not find SDK method: RemoveAllItems");
+    }
 
     /*
     StartPrepSDKCall(SDKCall_Player);
@@ -54,6 +70,10 @@ InitSDKCalls()
     StartPrepSDKCall(SDKCall_Player);
     PrepSDKCall_SetFromConf(conf, SDKConf_Virtual, "Spawn");
     hSpawn = EndPrepSDKCall();
+
+    if (hSpawn == INVALID_HANDLE) {
+        PrintToServer("[WeaponsMaster] WARNING: Could not find SDK method: Spawn");
+    }
     
     CloseHandle(conf);
 
@@ -62,9 +82,9 @@ InitSDKCalls()
     h_iMaxArmor		= FindSendPropInfo(PlayerEntity, "m_iMaxArmor");
     h_iArmorValue	= FindSendPropInfo(PlayerEntity, "m_ArmorValue");
     h_flMaxspeed	= FindSendPropInfo(PlayerEntity, "m_flMaxspeed");
-    h_flDefaultSpeed= FindSendPropInfo(PlayerEntity, "m_flDefaultSpeed");
+    h_flDefaultSpeed    = FindSendPropInfo(PlayerEntity, "m_flDefaultSpeed");
     h_iPlayerClass	= FindSendPropInfo(PlayerEntity, "m_iPlayerClass");
-    h_OffsetFlags     = FindSendPropOffs("CBasePlayer", "m_fFlags");
+    h_OffsetFlags       = FindSendPropOffs("CBasePlayer", "m_fFlags");
 }
 
 RemoveAllWeapons(client)

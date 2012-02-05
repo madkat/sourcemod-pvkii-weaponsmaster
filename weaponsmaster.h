@@ -121,7 +121,7 @@ new Weapon:WeaponOrder[W_MAX_LEVEL] = {
     CaptainParrot
 };
 
-public const weapon_properties[19][5] = {
+public const weapon_properties[W_MAX_LEVEL][5] = {
     { W_MELEE	, 1 , 0 , -1 },
     { W_MELEE	, 2 , 1 , -1 },
     { W_MELEE	, 1 , 1 , -1 },
