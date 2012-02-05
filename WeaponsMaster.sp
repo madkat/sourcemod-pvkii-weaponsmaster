@@ -135,7 +135,6 @@ public Action:AdminCommand_LevelAllPlayers(client, args) {
 
 public OnClientPutInServer(client) {
     if (cvar_enabled) {
-	// Welcome message?
 	ClientUserID[client] = 0;
 	ClientPlayerLevel[client] = 0;
 	ClientKillCounter[client] = 0;
@@ -268,6 +267,7 @@ public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
 
     decl String:weapon[W_STRING_LEN];
     GetEventString(event, "weapon", weapon, W_STRING_LEN);
+    PrintToServer("[WeaponsMaster] Player got kill with %s", weapon);
     
     TryLevelUp(client, victim, weapon, special);
 }
