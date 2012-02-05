@@ -50,7 +50,6 @@ public OnPluginStart() {
 	Event Hooks
     */
     HookEvent("player_spawn", OnPlayerSpawn);
-    HookEvent("player_death", OnPrePlayerDeath, EventHookMode_Pre);
     HookEvent("player_death", OnPlayerDeath);
     HookEvent("player_changeteam", OnPlayerChangeTeam);
     HookEvent("player_changeclass", OnPlayerChangeClass);
@@ -246,25 +245,11 @@ public OnPlayerSpecial(Handle:event, const String:name[], bool:dontBroadcast) {
     GetClientWeapon(client, weapon, W_STRING_LEN);
 
     if (StrEqual(WeaponNames[Weapon:GestirSpear], weapon)
-        || StrEqual(WeaponNames[Weapon:HuscarlSwordShield], weapon)) {
+        || StrEqual(WeaponNames[Weapon:HuscarlSwordShield], weapon)
+        || StrEqual(WeaponNames[Weapon:SkirmisherCutlass], weapon)) {
         ClientPlayerSpecial[client] = 1;
         LaunchHandleSpecial(client);
     }
-}
-
-public Action:OnPrePlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
-    if (!cvar_enabled) {
-        return Plugin_Continue;
-    }
-    new victim = GetClientOfUserId(GetEventInt(event, "userid"));
-    if (!victim || !IsClientInGame(victim))
-        return Plugin_Continue;
-
-    if (ClientPlayerSpecial[victim] == 2) {
-        HandleSpecial(Handle:0, victim);
-    }
-
-    return Plugin_Continue;
 }
 
 public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
@@ -272,6 +257,10 @@ public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
     new client = GetClientOfUserId(GetEventInt(event, "attacker"));
     if (!client || !IsPlayerAlive(client) || !IsClientInGame(client) || !cvar_enabled)
 	return;
+
+    if (ClientPlayerSpecial[victim] == 2) {
+        HandleSpecial(Handle:0, victim);
+    }
 
     ClientPlayerDead[victim] = 1;
 

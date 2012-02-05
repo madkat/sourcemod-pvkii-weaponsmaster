@@ -204,6 +204,9 @@ public Action:DelayGiveWeapons(Handle:timer, any:client)
 
 DelayedGiveWeapons(client)
 {
+    if (!IsClientInGame(client) || !IsPlayerAlive(client)) {
+        return;
+    }
     RemoveAllWeapons(client);
     GiveWeapons(client);
 }
