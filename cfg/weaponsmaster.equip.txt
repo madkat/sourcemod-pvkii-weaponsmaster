@@ -22,7 +22,7 @@
          * GestirJavelin,                  "javelin",     
          * HuscarlThrowingAxe,             "throwaxe",    
          * SkirmisherKeg,                  "powderkeg",   
-         * CaptainParrot,                  "parrot" && "punch_cpt"
+         * CaptainParrot,                  "parrot" && "hook"
          */
 
         "1" "archersword"

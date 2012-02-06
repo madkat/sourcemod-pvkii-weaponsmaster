@@ -9,11 +9,11 @@
 
         "PlayerMaxHealth" "100"
         "PlayerMaxArmor" "100"
-        "PlayerMoveSpeed" "220"
+        "PlayerMoveSpeed" "220.0"
 
         "EnableKillingSpree" "1"
         "KillsForSpree" "3"
-        "KillSpreeMoveSpeedBonus" "100"
+        "KillSpreeMoveSpeedBonus" "100.0"
         
         "EnableWarmupRound" "1"
         // The game will override this until we can eat the OnGameModeFirstRoundEnd event

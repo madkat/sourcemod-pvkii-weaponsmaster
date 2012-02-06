@@ -44,6 +44,8 @@ public OnPluginStart() {
 
     InitSDKCalls();
     InitCVARs();
+    SetupSoundDefaults();
+    ReadConfig();
     InitSounds();
     
     /*
@@ -78,10 +80,10 @@ public OnPluginStart() {
     AddServerTag(SERVER_TAG);
 }
 
-Debug(String:message[1024])
+Debug(const String:message[], any:...)
 {
     if (cvar_debug) {
-        PrintToServer(message);
+        PrintToServer("[WeaponsMaster] %t", message);
     }
 }
 
@@ -93,14 +95,14 @@ public Action:OnDisabledEvent(Handle:event, const String:name[], bool:dontBroadc
 public Action:OnGameModeFirstRoundBegin(Handle:event, const String:name[], bool:dontBroadcast)
 {
     LaunchWarmupTimer();
-    Debug("FirstRoundBegins");
+    Debug("First Round Begins");
     WarmupInProgress = true;
     return Plugin_Continue;
 }
 
 public Action:OnGameModeFirstRoundEnd(Handle:event, const String:name[], bool:dontBroadcast)
 {
-    Debug("FirstRoundEnds");
+    Debug("First Round Ends");
     if (WarmupRemaining > 0) {
         WarmupRemaining = 0;
     }
@@ -204,12 +206,12 @@ public OnPlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast) {
     }
     */
 
-    SetEntData(client, h_iMaxHealth,	cvar_health, 4, true);
-    SetEntData(client, h_iHealth,	cvar_health, 4, true);
-    SetEntData(client, h_iMaxArmor,	cvar_armor, 4, true);
-    SetEntData(client, h_iArmorValue,	cvar_armor, 4, true);
-    SetEntDataFloat(client, h_flMaxspeed,	cvar_movespeed, true);
-    SetEntDataFloat(client, h_flDefaultSpeed,	cvar_movespeed, true);
+    SetEntData(client, h_iMaxHealth,	CfgPlayerMaxHealth, 4, true);
+    SetEntData(client, h_iHealth,	CfgPlayerMaxHealth, 4, true);
+    SetEntData(client, h_iMaxArmor,	CfgPlayerMaxArmor, 4, true);
+    SetEntData(client, h_iArmorValue,	CfgPlayerMaxArmor, 4, true);
+    SetEntDataFloat(client, h_flMaxspeed,	CfgPlayerMoveSpeed, true);
+    SetEntDataFloat(client, h_flDefaultSpeed,	CfgPlayerMoveSpeed, true);
 
     if (GameWon) {
 	FreezeClient(client);
@@ -267,7 +269,7 @@ public OnPlayerDeath(Handle:event, const String:name[], bool:dontBroadcast) {
 
     decl String:weapon[W_STRING_LEN];
     GetEventString(event, "weapon", weapon, W_STRING_LEN);
-    PrintToServer("[WeaponsMaster] Player got kill with %s", weapon);
+    Debug("Player got kill with %s", weapon);
     
     TryLevelUp(client, victim, weapon, special);
 }

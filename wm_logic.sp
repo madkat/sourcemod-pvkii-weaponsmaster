@@ -19,7 +19,7 @@
 
 TryLevelUp(client, victim, String:weapon[W_STRING_LEN], special)
 {
-    if (cvar_warmuplength > 0 && WarmupRemaining > 0) {
+    if (CfgEnableWarmupRound && WarmupRemaining > 0) {
         LaunchDelayGiveWeapons(client);
         return;
     }
@@ -30,7 +30,7 @@ TryLevelUp(client, victim, String:weapon[W_STRING_LEN], special)
         ChangeClientLevel(client, -1);
     }
 
-    if (cvar_respawntimer > -1) {
+    if (CfgEnableForcedRespawn) {
         LaunchRespawnTimer(victim);
     }
 
@@ -41,7 +41,7 @@ TryLevelUp(client, victim, String:weapon[W_STRING_LEN], special)
         // If they killed with the weapon from this level
         ClientKillCounter[client]++;
         ClientSpreeCounter[client]++;
-        if (ClientKillCounter[client] >= cvar_killstolevel) {
+        if (ClientKillCounter[client] >= CfgKillsPerLevel) {
             ClientKillCounter[client] = 0;
             if (special && ClientPlayerSpecial[client] > 0) {
                 ClientPlayerSpecial[client] = 2;
@@ -60,9 +60,9 @@ TryLevelUp(client, victim, String:weapon[W_STRING_LEN], special)
        LaunchDelayGiveWeapons(client);
     }
 
-    if (ClientSpreeCounter[client] >= cvar_killsforspree) {
+    if (CfgEnableKillingSpree && ClientSpreeCounter[client] >= CfgKillsForSpree) {
         ClientSpreeCounter[client] = 0;
-        if (cvar_killsforspree > 0) {
+        if (CfgKillsForSpree > 0) {
             HandleKillingSpree(client);
         }
     }
@@ -86,7 +86,7 @@ ChangeClientLevel(client, difference)
 
     PlaySound(client, Sounds:Up);
     
-    if (level >= W_MAX_LEVEL) {
+    if (level >= CfgWeaponOrderCount) {
         GameWon = true;
         FreezeAllPlayers();
         decl String:name[MAX_NAME_LENGTH + 1];
@@ -120,8 +120,8 @@ DelayedChangeLevel()
 
 LaunchWarmupTimer()
 {
-    if (cvar_warmuplength > 0) {
-        WarmupRemaining = cvar_warmuplength;
+    if (CfgEnableWarmupRound) {
+        WarmupRemaining = CfgWarmupRoundLength;
         for (new i = 1; i <= MaxClients; i++) if (IsClientInGame(i)) LaunchDelayGiveWeapons(i, 0.0);
         CreateTimer(1.0, WarmupTick);
     }
@@ -135,16 +135,6 @@ public Action:WarmupTick(Handle:timer)
     }
     else {
         for (new i = 1; i <= MaxClients; i++) if (IsClientInGame(i)) LaunchDelayGiveWeapons(i, 0.0);
-        new Handle:event = CreateEvent("gamemode_firstround_wait_end");
-    	if (event == INVALID_HANDLE)
-    	{
-    		return;
-    	}
-     
-    	SetEventInt(event, "plpirate", 3);
-    	SetEventInt(event, "plviking", 3);
-        SetEventInt(event, "plknight", 3);
-    	FireEvent(event);
     }
 }
 
@@ -161,7 +151,7 @@ public Action:RespawnTick(Handle:timer, any:client)
 {
     if (IsClientInGame(client)) {
         ClientSpawnTimer[client]++;
-        if (ClientSpawnTimer[client] >= cvar_respawntimer) {
+        if (ClientSpawnTimer[client] >= CfgRespawnTimer) {
             ClientSpawnTimer[client] = 0;
             ForceSpawn(client);
         }
@@ -220,7 +210,7 @@ public GiveWeapons(client)
 
     new weapon_object;
 
-    if (cvar_warmuplength > 0 && WarmupRemaining > 0) {
+    if (CfgEnableWarmupRound && WarmupRemaining > 0) {
         weapon_object = GiveWeapon(client, WeaponNames[Weapon:SkirmisherKeg]);
         if (weapon_properties[Weapon:SkirmisherKeg][W_AMMO_QTY] > -1) {
     	    new ammo_type = GetEntProp(weapon_object, Prop_Data, "m_iPrimaryAmmoType", 4);
@@ -292,12 +282,12 @@ public PrintLevelInfo(client) {
     new level = ClientPlayerLevel[client];
     PrintToChat(client, "You are on level %d", level + 1);
 
-    if (cvar_killstolevel > 1)
+    if (CfgKillsPerLevel > 1)
     {
         new kills = ClientKillCounter[client];
         //decl String:subtext[64];
-        //Format(subtext, W_STRING_LEN, "You need %d kills to advance to the next level.", cvar_killstolevel - kills);
-        PrintToChat(client, "You need %d kills to advance to the next level", cvar_killstolevel - kills);
+        //Format(subtext, W_STRING_LEN, "You need %d kills to advance to the next level.", CfgKillsPerLevel - kills);
+        PrintToChat(client, "You need %d kills to advance to the next level", CfgKillsPerLevel - kills);
     }    
 }
 
@@ -388,9 +378,9 @@ StartKillingSpreeEffects(client)
     }
     ClientSpreeEffects[client] = 1;
 
-    if ( cvar_spreemovespeed ) {
-        SetEntDataFloat(client, h_flDefaultSpeed, cvar_spreemovespeed + cvar_movespeed);
-        SetEntDataFloat(client, h_flMaxspeed, cvar_spreemovespeed + cvar_movespeed);
+    if ( CfgKillSpreeMoveSpeedBonus ) {
+        SetEntDataFloat(client, h_flDefaultSpeed, CfgKillSpreeMoveSpeedBonus + CfgPlayerMoveSpeed);
+        SetEntDataFloat(client, h_flMaxspeed, CfgKillSpreeMoveSpeedBonus + CfgPlayerMoveSpeed);
     }
     if ( EventSounds[Spree][0] ) {
         EmitSoundToAll(EventSounds[Spree], client, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_NOFLAGS, SNDVOL_NORMAL, SNDPITCH_NORMAL);
@@ -404,9 +394,9 @@ StopKillingSpreeEffects(client)
     }
     ClientSpreeEffects[client] = 0;
     
-    if (cvar_spreemovespeed) {
-        SetEntDataFloat(client, h_flDefaultSpeed, cvar_movespeed);
-        SetEntDataFloat(client, h_flMaxspeed, cvar_movespeed);
+    if (CfgKillSpreeMoveSpeedBonus) {
+        SetEntDataFloat(client, h_flDefaultSpeed, CfgPlayerMoveSpeed);
+        SetEntDataFloat(client, h_flMaxspeed, CfgPlayerMoveSpeed);
     }
     if (EventSounds[Spree][0]) {
         EmitSoundToAll(EventSounds[Spree], client, SNDCHAN_AUTO, SNDLEVEL_NORMAL, SND_STOPLOOPING, SNDVOL_NORMAL, SNDPITCH_NORMAL);

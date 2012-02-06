@@ -16,14 +16,16 @@
 *
 *   Copyright (c) 2010-2012, Marty "MadKat" Lewis
 *******************************************************************************/
-
-InitSounds()
+SetupSoundDefaults()
 {
     EventSounds[Welcome] = "weaponsmaster/welcome2.mp3";
     EventSounds[Up] = "weaponsmaster/smb3_powerup.wav";
     EventSounds[Down] = "weaponsmaster/smb3_powerdown.wav";
     EventSounds[Spree] = "weaponsmaster/smb_star.mp3";
+}
 
+InitSounds()
+{
     decl String:Hi[PLATFORM_MAX_PATH];
     for ( new Sounds:i = Welcome; i < MaxSounds; i++ )
     {
@@ -45,6 +47,7 @@ InitCVARs()
     
     new Handle:cv_enabled 	= CreateConVar("wm_enabled",		"1", "Enables/disables PVKII Weapons Master.", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 0.0, true, 1.0);
     new Handle:cv_debug 	= CreateConVar("wm_debug",		"0", "Debug mode.", FCVAR_PLUGIN, true, 0.0, true, 1.0);
+    /*
     new Handle:cv_killstolevel  = CreateConVar("wm_killstolevel",	"1", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 0.0, false, 1.0);
     new Handle:cv_respawntimer  = CreateConVar("wm_respawntimer", 	"3", "Number of seconds between respawns", FCVAR_NOTIFY | FCVAR_PLUGIN, true, -1.0, true, 20.0);
     new Handle:cv_health        = CreateConVar("wm_health",		"100", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 1.0, false, 1.0);
@@ -52,10 +55,12 @@ InitCVARs()
     new Handle:cv_killsforspree = CreateConVar("wm_killsforspree",	"3", "Number of kills for a player to enter a killing spree. 0 to disable", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 0.0, true, 10.0);
     new Handle:cv_warmuplength  = CreateConVar("wm_warmuplength",	"45", "Length of the warmup round in seconds. 0 to disable", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 0.0, true, 500.0);
     new Handle:cv_movespeed     = CreateConVar("wm_movespeed",		"220.0", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 1.0, true, 300.0);
-    new Handle:cv_spreemovespeed= CreateConVar("wm_spreemovespeed",	"100.0", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 1.0, true, 300.0);
+    new Handle:cv_spreemovespeed= CreateConVar("wm_spreemovespeed",	"100.0", "", FCVAR_NOTIFY | FCVAR_PLUGIN, true, 1.0, true, 300.0); 
+    */ 
     
     HookConVarChange(cv_enabled, 	cvHookEnabled);
     HookConVarChange(cv_debug,  	cvHookDebug);
+    /*
     HookConVarChange(cv_killstolevel,  	cvHookKillsToLevel);
     HookConVarChange(cv_respawntimer,  	cvHookRespawnTimer);
     HookConVarChange(cv_health, 	cvHookHealth);
@@ -63,10 +68,12 @@ InitCVARs()
     HookConVarChange(cv_killsforspree, 	cvHookKillsForSpree);
     HookConVarChange(cv_warmuplength, 	cvHookWarmupLength);
     HookConVarChange(cv_movespeed, 	cvHookMoveSpeed);
-    HookConVarChange(cv_spreemovespeed,	cvHookSpreeMoveSpeed);
+    HookConVarChange(cv_spreemovespeed,	cvHookSpreeMoveSpeed); 
+    */ 
     
     cvar_enabled 	= GetConVarBool(cv_enabled);
     cvar_debug 		= GetConVarBool(cv_debug);
+    /*
     cvar_killstolevel	= GetConVarInt(cv_killstolevel);
     cvar_respawntimer	= GetConVarInt(cv_respawntimer);
     cvar_health 	= GetConVarInt(cv_health);
@@ -74,7 +81,8 @@ InitCVARs()
     cvar_killsforspree	= GetConVarInt(cv_killsforspree);
     cvar_warmuplength   = GetConVarInt(cv_warmuplength);
     cvar_movespeed 	= GetConVarFloat(cv_movespeed);
-    cvar_spreemovespeed	= GetConVarFloat(cv_spreemovespeed);
+    cvar_spreemovespeed	= GetConVarFloat(cv_spreemovespeed); 
+    */ 
 }
 
 public cvHookEnabled(Handle:cvar, const String:oldVal[], const String:newVal[]) { 
@@ -87,6 +95,7 @@ public cvHookEnabled(Handle:cvar, const String:oldVal[], const String:newVal[]) 
     }
 }
 public cvHookDebug(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_debug = GetConVarBool(cvar); }
+/*
 public cvHookKillsToLevel(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_killstolevel = GetConVarInt(cvar); }
 public cvHookRespawnTimer(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_respawntimer = GetConVarInt(cvar); }
 public cvHookHealth(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_health = GetConVarInt(cvar); }
@@ -94,7 +103,8 @@ public cvHookArmor(Handle:cvar, const String:oldVal[], const String:newVal[]) { 
 public cvHookKillsForSpree(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_killsforspree = GetConVarInt(cvar); }
 public cvHookWarmupLength(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_warmuplength = GetConVarInt(cvar); }
 public cvHookMoveSpeed(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_movespeed = GetConVarFloat(cvar); }
-public cvHookSpreeMoveSpeed(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_spreemovespeed = GetConVarFloat(cvar); }
+public cvHookSpreeMoveSpeed(Handle:cvar, const String:oldVal[], const String:newVal[]) { cvar_spreemovespeed = GetConVarFloat(cvar); } 
+*/ 
 
 
 ReadConfig()
@@ -242,11 +252,18 @@ public SMCResult:ReadConfig_NewSection(Handle:smc, const String:name[], bool:opt
 {
     if(name[0])
     {
-        /*
-        Call_StartForward(FwdConfigNewSection);
-        Call_PushString(name);
-        Call_Finish();
-        */
+        if(strcmp("Config", name, false) == 0)
+        {
+            ConfigState = CONFIG_STATE_CONFIG;
+        } else if(strcmp("WeaponOrder", name, false) == 0) {
+            //CfgEnableRandomWeaponOrder = false;
+            ConfigState = CONFIG_STATE_EQUIP;
+        } else if(strcmp("MultipleKillsPerLevel", name, false) == 0) {
+            ConfigReset = true;
+            ConfigState = CONFIG_STATE_KILLS;
+        } else if(strcmp("Sounds", name, false) == 0) {
+            ConfigState = CONFIG_STATE_SOUNDS;
+        }
     }
 
     return SMCParse_Continue;
@@ -260,12 +277,108 @@ public SMCResult:ReadConfig_KeyValue(Handle:smc,
 {
     if(key[0] && value[0])
     {
-        /*
-        Call_StartForward(FwdConfigKeyValue);
-        Call_PushString(key);
-        Call_PushString(value);
-        Call_Finish();
-        */
+        if(ConfigReset && ConfigState == CONFIG_STATE_KILLS)
+        {
+            ConfigReset = false;
+            //ClearCustomKill();
+        }
+
+        switch(ConfigState)
+        {
+            case CONFIG_STATE_CONFIG:
+            {
+                if ( strcmp("KillsPerLevel", key, false) == 0 ) {
+                    CfgKillsPerLevel = StringToInt(value);
+                } else if(strcmp("EnableForcedRespawn", key, false) == 0) {
+                    CfgEnableForcedRespawn = bool:StringToInt(value);
+                } else if(strcmp("RespawnTimer", key, false) == 0) {
+                    CfgRespawnTimer = StringToInt(value);
+                } else if(strcmp("PlayerMaxHealth", key, false) == 0) {
+                    CfgPlayerMaxHealth = StringToInt(value);
+                } else if(strcmp("PlayerMaxArmor", key, false) == 0) {
+                    CfgPlayerMaxArmor = StringToInt(value);
+                } else if(strcmp("PlayerMoveSpeed", key, false) == 0) {
+                    CfgPlayerMoveSpeed = StringToFloat(value);
+                } else if(strcmp("EnableKillingSpree", key, false) == 0) {
+                    CfgEnableKillingSpree = bool:StringToInt(value);
+                } else if(strcmp("KillsForSpree", key, false) == 0) {
+                    CfgKillsForSpree = StringToInt(value);
+                } else if(strcmp("KillSpreeMoveSpeedBonus", key, false) == 0) {
+                    CfgKillSpreeMoveSpeedBonus = StringToFloat(value);
+                } else if(strcmp("EnableWarmupRound", key, false) == 0) {
+                    CfgEnableWarmupRound = bool:StringToInt(value);
+                } else if(strcmp("WarmupRoundLength", key, false) == 0) {
+                    CfgWarmupRoundLength = StringToInt(value);
+                }
+            }
+            
+            case CONFIG_STATE_EQUIP:
+            {
+                
+                if ( ( strcmp("RandomWeaponReserveLevels", key, false) == 0 ) && ( value[0] ) )
+                {
+                    /*
+                    new String:buffers[sizeof(CfgRandomWeaponReserveLevels)][3];
+                    ExplodeString(value, ",", buffers, sizeof(buffers), sizeof(buffers[]));
+                    for ( new i = 0; i < sizeof(buffers); i++ )
+                    {
+                        if ( !buffers[i][0] ) {
+                            break;
+                        }
+                        CfgRandomWeaponReserveLevels[StringToInt(buffers[i])-1] = 1;
+                    } 
+                    */ 
+                }
+
+                else if ( ( strcmp("RandomWeaponOrder", key, false) == 0 ) && ( StringToInt(value) == 1 ) )
+                {
+                    /*
+                    // Setup random weapon order.
+                    CfgEnableRandomWeaponOrder = true;
+                    for ( new i = 0; i < CfgWeaponOrderCount; i++ )
+                    {
+                        if ( !CfgRandomWeaponReserveLevels[i] )
+                        {
+                            WeaponOrder[sizeOfRandom++] = Weapon:i;
+                        }
+                    }
+                    UTIL_ArrayIntRand(WeaponOrder, sizeOfRandom);
+                    for ( new i = 0; (i < CfgWeaponOrderCount) && (sizeOfRandom < CfgWeaponOrderCount); i++ )
+                    {
+                        if ( CfgRandomWeaponReserveLevels[i] )
+                        {
+                            WeaponOrder[sizeOfRandom++] = WeaponOrder[i];
+                            WeaponOrder[i] = Weapon:i;
+                        }
+                    } 
+                    */ 
+                }
+                else
+                {
+                    new Level = StringToInt(key);
+
+                    if ( 1 <= Level <= W_MAX_LEVEL )
+                    {
+                        new Weapon:id = FindWeaponId(value);
+                        WeaponOrder[Level] = id;
+                        CfgWeaponOrderCount = Level;
+                    }
+                }
+            }
+
+            case CONFIG_STATE_SOUNDS:
+            {
+                if(strcmp(key, "Welcome", false) == 0) {
+                    strcopy(EventSounds[Welcome], sizeof(EventSounds[]), value);
+                } else if(strcmp(key, "LevelUp", false) == 0) {
+                    strcopy(EventSounds[Up], sizeof(EventSounds[]), value);
+                } else if(strcmp(key, "LevelDown", false) == 0) {
+                    strcopy(EventSounds[Down], sizeof(EventSounds[]), value);
+                } else if(strcmp(key, "KillingSpree", false) == 0) {
+                    strcopy(EventSounds[Spree], sizeof(EventSounds[]), value);
+                }
+            }
+        }
     }
 
     return SMCParse_Continue;

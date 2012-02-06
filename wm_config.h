@@ -19,6 +19,7 @@
 
 new cvar_enabled;
 new cvar_debug;
+/*
 new cvar_killstolevel;
 new cvar_respawntimer;
 new cvar_health;
@@ -26,26 +27,55 @@ new cvar_armor;
 new cvar_killsforspree;
 new cvar_warmuplength;
 new Float:cvar_movespeed;
-new Float:cvar_spreemovespeed;
+new Float:cvar_spreemovespeed; 
+*/ 
 
 enum Sounds
 {
     Welcome,
-    Knife,
-    Nade,
-    Steal,
     Up,
     Down,
     Spree,
-    AutoFF,
-    MultiKill,
-    Winner,
-    WarmupTimerSound,
     MaxSounds
 }
 
 new String:EventSounds[Sounds:MaxSounds][64];
 
+enum State
+{
+    CONFIG_STATE_NONE,
+    CONFIG_STATE_CONFIG,
+    CONFIG_STATE_EQUIP,
+    CONFIG_STATE_KILLS,
+    CONFIG_STATE_SOUNDS,
+    CONFIG_STATE_SECONDARY_LIST
+}
+
+new State:ConfigState;
+new bool:ConfigReset;
 new Handle:ConfigParser;
 new ParseConfigCount;
 new ConfigCount = 0;
+
+/*
+new bool:CfgEnableRandomWeaponOrder = false;
+new CfgRandomWeaponReserveLevels[W_MAX_LEVEL];
+*/
+
+new CfgWeaponOrderCount = W_MAX_LEVEL;
+
+new CfgKillsPerLevel = 1;
+
+new bool:CfgEnableForcedRespawn = true;
+new CfgRespawnTimer = 3;
+
+new CfgPlayerMaxHealth = 100;
+new CfgPlayerMaxArmor = 100;
+new Float:CfgPlayerMoveSpeed = 220.0;
+
+new bool:CfgEnableKillingSpree = true;
+new CfgKillsForSpree = 3;
+new Float:CfgKillSpreeMoveSpeedBonus = 100.0;
+
+new bool:CfgEnableWarmupRound = true;
+new CfgWarmupRoundLength = 45;
