@@ -24,33 +24,13 @@ Enable or disable PVKII Weapons Master
 
     wm_enabled (1)
 
-Number of frags needed with a particular weapon to level up
+Edit weaponsmaster.config.txt to change the gameplay.
+Edit weaponsmaster.equip.txt to edit the weapon order.
 
-    wm_killstolevel (1)
-
-Enable or disable instant respawn of players on death
-
-    wm_autorespawn (0)
-
-Amount of health to give to each player
-
-    wm_health (100)
-
-Amount of armor to give to each player
-
-    wm_armor (100)
-
-Max move speed to give to each player
-
-    wm_movespeed (220)
-    
-Number of kills needed to trigger a killing spree (0 to disable)
-
-    wm_killsforspree (3)
-    
-Bonus move speed to give to a player on a killing spree
-
-    wm_spreemovespeed (100)
+You may optionally create a separate configuration for each map.
+Create a file named mapname.config.txt or mapname.equip.text in the
+maps subdirectory. These settings will take precedence over the
+weaponsmaster.config.txt and weaponsmaster.equip.txt.
 
 # Installation
 
@@ -58,6 +38,7 @@ Bonus move speed to give to a player on a killing spree
  * Place the WeaponsMaster.smx file into your pvkii/addons/sourcemod/plugins/ directory.
  * Place the weaponsmaster.cfg.txt file into your pvkii/addons/sourcemod/gamedata/ directory.
  * Place the contents of the sounds subfolder into your pvkii/sound/weaponsmaster/ directory.
+ * Place the contents of the cfg subfolder into your pvkii/cfg/weaponsmaster/ directory.
  * Restart your srcds or change levels.
  * All done! Enjoy.
 
@@ -67,9 +48,13 @@ Bonus move speed to give to a player on a killing spree
 
 # Binaries
 
-Compiled version of WeaponsMaster.sp available:
+Most recent compiled version of WeaponsMaster available:
 
  * https://github.com/madkat/sourcemod-pvkii-weaponsmaster/raw/master/WeaponsMaster.smx
+
+Versioned release:
+
+ * https://github.com/madkat/sourcemod-pvkii/weaponsmaster/releases/raw/master/WeaponsMaster_v1.0.zip
 
 # License
 
