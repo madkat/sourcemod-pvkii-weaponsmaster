@@ -320,7 +320,7 @@ public SMCResult:ReadConfig_KeyValue(Handle:smc,
                     {
                         new Weapon:weapon_id = FindWeaponId(value);
                         Debug("%d Level, %s Value, %d Id", Level, value, weapon_id);
-                        WeaponOrder[Level] = weapon_id;
+                        WeaponOrder[Level-1] = weapon_id;
                         CfgWeaponOrderCount = Level;
                     }
                 }
