@@ -319,7 +319,7 @@ public SMCResult:ReadConfig_KeyValue(Handle:smc,
                     if ( 1 <= Level <= W_MAX_LEVEL )
                     {
                         new Weapon:id = FindWeaponId(value);
-                        WeaponOrder[Level - 1] = id;
+                        WeaponOrder[Level] = id;
                         CfgWeaponOrderCount = Level;
                     }
                 }

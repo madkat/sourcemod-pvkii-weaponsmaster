@@ -103,9 +103,9 @@ public const String:WeaponNames[W_TOTAL_COUNT][W_STRING_LEN] = {
 
 Weapon:FindWeaponId(const String:name[]) {
     new i;
-    for (i = 1; i <= W_MAX_LEVEL; i++) {
+    for (i = 0; i < W_MAX_LEVEL; i++) {
         if (StrEqual(name, WeaponNames[i])) {
-            return Weapon:i;
+            return Weapon:(i+1);
         }
     }
 
