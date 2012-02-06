@@ -162,10 +162,7 @@ public OnMapStart() {
     GameWon = false;
 
     ReadConfig();
-
-    if (EventSounds[Welcome][0] == '\0') {
-        InitSounds();
-    }
+    InitSounds();
 }
 
 public OnMapEnd() {
