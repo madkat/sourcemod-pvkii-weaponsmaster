@@ -44,22 +44,5 @@
         "17" "throwaxe"
         "18" "powderkeg"
         "19" "parrot"
-
-        /**
-         * If RandomWeaponOrder is enabled, keep these levels unchanged.
-         * Use comma as a delimiter, do not use whitespace characters - only digits are allowed.
-         * Please keep this config line after levels list and before RandomWeaponOrder.
-         *
-         * "18,19"  - keep powderkeg and parrot on defined level
-         * "19"     - keep parrot on defined level
-         * ""       - randomize all levels
-         */
-        "RandomWeaponReserveLevels" "18,19"
-
-        /**
-         * This will take the weapons in the WeaponOrder and randomize all the weapons order.
-         * Please keep this config line after levels list and after RandomWeaponReserveLevels.
-         */
-        "RandomWeaponOrder" "0"
     }
 }
