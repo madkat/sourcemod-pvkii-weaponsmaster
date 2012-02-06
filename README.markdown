@@ -54,7 +54,7 @@ Most recent compiled version of WeaponsMaster available:
 
 Versioned release:
 
- * https://github.com/madkat/sourcemod-pvkii-weaponsmaster/releases/raw/master/WeaponsMaster_v1.0.zip
+ * https://github.com/madkat/sourcemod-pvkii-weaponsmaster/raw/master/releases/WeaponsMaster_v1.0.zip
 
 # License
 
