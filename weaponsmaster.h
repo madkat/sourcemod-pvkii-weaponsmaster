@@ -155,3 +155,37 @@ public const weapon_properties[W_MAX_LEVEL][5] = {
     { W_SPECIAL	, 3 , 0 , -1 },
     { W_SPECIAL	, 3 , 0 , 1  }
 };
+
+UTIL_GetRandomInt(start, end)
+{
+    new rand;
+    #if defined URANDOM_SUPPORT
+        // if sourcemod version >= 1.3.0
+        rand = GetURandomInt();
+    #else
+        new Float:frand = GetEngineTime() + GetRandomFloat();
+        rand = RoundFloat( ( frand - RoundToZero(frand) ) * 1000000 ) + GetTime();
+    #endif
+    return ( rand % (1 + end - start) ) + start;
+}
+
+UTIL_WeaponArrayIntRand(array[], size)
+{
+    if ( size < 2 )
+    {
+        return;
+    }
+    new tmpIndex, tmpValue;
+    for ( new i = 0; i < size-1; i++ )
+    {
+        tmpIndex = UTIL_GetRandomInt(i, size-1);
+        if ( tmpIndex == i )
+        {
+            continue;
+        }
+        tmpValue = array[tmpIndex];
+        
+        array[tmpIndex] = array[i];
+        array[i] = tmpValue;
+    }
+}

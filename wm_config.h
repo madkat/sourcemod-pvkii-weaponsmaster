@@ -57,10 +57,9 @@ new Handle:ConfigParser;
 new ParseConfigCount;
 new ConfigCount = 0;
 
-/*
-new bool:CfgEnableRandomWeaponOrder = false;
+
+//new bool:CfgEnableRandomWeaponOrder = false;
 new CfgRandomWeaponReserveLevels[W_MAX_LEVEL];
-*/
 
 new CfgWeaponOrderCount = W_MAX_LEVEL;
 
