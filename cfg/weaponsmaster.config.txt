@@ -2,7 +2,7 @@
 {
     "Config"
     {
-        "KillsPerLevel" "3"
+        "KillsPerLevel" "1"
 
         "EnableForcedRespawn" "1"
         "RespawnTimer" "3"
