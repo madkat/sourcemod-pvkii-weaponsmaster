@@ -240,7 +240,12 @@ public GiveWeapons(client)
 
     // If using a ranged weapon that's not a parrot or longbow
     // Or, if they have a breakable weapon
-    if ((weapon_id >= Weapon:CaptainBlunderbuss && weapon_id < Weapon:CaptainParrot && weapon_id != Weapon:ArcherLongbow)
+    if (weapon_id == Weapon:CaptainBlunderbuss
+        || weapon_id == Weapon:SkirmisherFlintlock
+        || weapon_id == Weapon:ArcherCrossbow
+        || weapon_id == Weapon:GestirJavelin
+        || weapon_id == Weapon:HuscarlThrowingAxe
+        || weapon_id == Weapon:SkirmisherKeg
         || weapon_id == Weapon:HeavyKnightSwordShield
         || weapon_id == Weapon:HuscarlSwordShield
         || weapon_id == Weapon:GestirSwordShield) {

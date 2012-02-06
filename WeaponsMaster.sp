@@ -84,7 +84,7 @@ Debug(const String:message[], any:...)
 {
     if (cvar_debug) {
         new String:formatted_string[strlen(message)+255];
-	VFormat(formatted_string, strlen(formatted_string), message[0], 2);
+	VFormat(formatted_string, strlen(message)+255, message, 2);
         PrintToServer("[WeaponsMaster] %s", formatted_string);
     }
 }

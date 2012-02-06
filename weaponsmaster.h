@@ -48,7 +48,7 @@ new ClientPlayerSpecial[MAXPLAYERS + 1] = {0, ...};
 #define W_SPCATK	2
 #define W_AMMO_QTY	3
 
-#define W_TOTAL_COUNT   20
+#define W_TOTAL_COUNT   21
 #define W_MAX_LEVEL	19
 
 #define W_STRING_LEN    20
@@ -73,6 +73,7 @@ enum Weapon {
     HuscarlThrowingAxe,
     SkirmisherKeg,
     CaptainParrot,
+    CaptainHook,
     CaptainPunch
 };
 
@@ -96,7 +97,8 @@ public const String:WeaponNames[W_TOTAL_COUNT][W_STRING_LEN] = {
     "throwaxe",
     "powderkeg",
     "parrot",
-    "hook"
+    "hook",
+    "punch"
 };
 
 Weapon:FindWeaponId(const String:name[]) {
