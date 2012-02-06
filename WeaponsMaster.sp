@@ -116,7 +116,7 @@ public Action:OnUnhandledEvent(Handle:event, const String:name[], bool:dontBroad
 }
 
 public Action:AdminCommand_LevelPlayer(client, args) {
-    TryLevelUp(client, 0, WeaponNames[ClientPlayerLevel[client]], false);
+    TryLevelUp(client, 0, WeaponNames[WeaponOrder[ClientPlayerLevel[client]]], false);
     return Plugin_Handled;
 }
 
