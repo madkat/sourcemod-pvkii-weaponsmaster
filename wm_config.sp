@@ -292,7 +292,7 @@ public SMCResult:ReadConfig_KeyValue(Handle:smc,
                     
                     // Setup random weapon order.
                     //CfgEnableRandomWeaponOrder = true;
-                    new sizeOfRandom = -1;
+                    new sizeOfRandom = 0;
                     for (new i = 0; i < CfgWeaponOrderCount; i++)
                     {
                         if (!CfgRandomWeaponReserveLevels[i])
@@ -300,7 +300,7 @@ public SMCResult:ReadConfig_KeyValue(Handle:smc,
                             WeaponOrder[sizeOfRandom++] = Weapon:i;
                         }
                     }
-                    UTIL_WeaponArrayIntRand(WeaponOrder, sizeOfRandom);
+                    UTIL_WeaponArrayIntRand(WeaponOrder, sizeOfRandom - 1);
                     for (new i = 0; (i < CfgWeaponOrderCount) && (sizeOfRandom < CfgWeaponOrderCount); i++)
                     {
                         if ( CfgRandomWeaponReserveLevels[i] )
