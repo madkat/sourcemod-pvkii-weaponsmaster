@@ -83,7 +83,7 @@ public OnPluginStart() {
 Debug(const String:message[], any:...)
 {
     if (cvar_debug) {
-        PrintToServer("[WeaponsMaster] %t", message);
+        PrintToServer("[WeaponsMaster] %s", message);
     }
 }
 
@@ -156,6 +156,7 @@ public OnClientPutInServer(client) {
 }
 
 public OnMapStart() {
+    Debug("Map Start Called");
     for (new i = 1; i <= MaxClients; i++) if (IsClientInGame(i)) OnClientPutInServer(i);
     LeaderLevel = 0;
     LeaderName = "";
