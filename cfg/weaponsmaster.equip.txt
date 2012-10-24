@@ -4,6 +4,7 @@
     {
         /**
          * Weapon Choices:
+	 * SharpshooterDagger,             "dagger", 
          * ArcherSword,                    "archersword", 
          * BerserkerAxeSword,              "axesword",    
          * BerserkerAxe,                   "bigaxe",      
@@ -15,8 +16,10 @@
          * HuscarlAxe,                     "twoaxe",      
          * HeavyKnightSword,               "twosword",    
          * HuscarlSwordShield,             "vikingshield",
+	 * SharpshooterRifle,              "ssrifle", 
          * CaptainBlunderbuss,             "blunderbuss", 
-         * SkirmisherFlintlock,            "flintlock",   
+	 * SkirmisherFlintlock,            "flintlock",   
+         * SharpshooterFlintlock,          "ssflintlock",   
          * ArcherCrossbow,                 "crossbow",    
          * ArcherLongbow,                  "longbow",     
          * GestirJavelin,                  "javelin",     
@@ -25,24 +28,27 @@
          * CaptainParrot,                  "parrot" && "hook"
          */
 
-        "1" "archersword"
-        "2" "axesword"
-        "3" "bigaxe"
-        "4" "cutlass"
-        "5" "cutlass2"
-        "6" "seaxshield"
-        "7" "spear"
-        "8" "swordshield"
-        "9" "twoaxe"
-        "10" "twosword"
-        "11" "vikingshield"
-        "12" "blunderbuss"
-        "13" "flintlock"
-        "14" "crossbow"
-        "15" "longbow"
-        "16" "javelin"
-        "17" "throwaxe"
-        "18" "powderkeg"
-        "19" "parrot"
+	"1" "dagger"
+        "2" "archersword"
+        "3" "axesword"
+        "4" "bigaxe"
+        "5" "cutlass"
+        "6" "cutlass2"
+        "7" "seaxshield"
+        "8" "spear"
+        "9" "swordshield"
+        "10" "twoaxe"
+        "11" "twosword"
+        "12" "vikingshield"
+	"13" "ssrifle"
+        "14" "blunderbuss"
+        "15" "flintlock"
+	"16" "ssflintlock"
+        "17" "crossbow"
+        "18" "longbow"
+        "19" "javelin"
+        "20" "throwaxe"
+        "21" "powderkeg"
+        "22" "parrot"
     }
 }

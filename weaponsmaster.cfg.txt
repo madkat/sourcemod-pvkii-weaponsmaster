@@ -6,32 +6,32 @@
 		{
 			"GiveNamedItem"
 			{
-				"windows"		"352" 
-				"linux"			"353" 
+				"windows"		"354" 
+				"linux"			"355" 
 			}
 			
 			"Weapon_Equip"
 			{
-				"windows"		"230" 
-				"linux"			"231" 
+				"windows"		"232" 
+				"linux"			"233" 
 			}
 
 			"RemoveAllItems"
 			{
-				"windows"		"300" 
-				"linux"			"301" 
+				"windows"		"302" 
+				"linux"			"303" 
 			}
 
 			"GiveAmmo"
 			{
-				"windows"		"224" 
-				"linux"			"225" 
+				"windows"		"226" 
+				"linux"			"227" 
 			}
                         
 			"ForceRespawn"
 			{
-				"windows"		"283"
-				"linux"			"284"
+				"windows"		"285"
+				"linux"			"286"
 			}
 
 			"Spawn"

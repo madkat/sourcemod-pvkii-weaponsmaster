@@ -37,6 +37,7 @@ TryLevelUp(client, victim, String:weapon[W_STRING_LEN], special)
     new level = ClientPlayerLevel[client];
     new Weapon:weapon_id = WeaponOrder[level];
     if (StrEqual(weapon, WeaponNames[weapon_id]) ||
+		(WeaponOrder[level] == Weapon:SharpshooterRifle && StrEqual(weapon, "ss_special")) ||
         (WeaponOrder[level] == Weapon:CaptainParrot && StrEqual(weapon, WeaponNames[Weapon:CaptainPunch]))) {
         // If they killed with the weapon from this level
         ClientKillCounter[client]++;
@@ -218,7 +219,7 @@ public GiveWeapons(client)
         }
         EquipWeapon(client, weapon_object);
 
-        weapon_object = GiveWeapon(client, WeaponNames[Weapon:ArcherSword]);
+        weapon_object = GiveWeapon(client, WeaponNames[Weapon:SharpshooterDagger]);
     	if (weapon_object > 0) {
     	    EquipWeapon(client, weapon_object);
     	}
@@ -242,6 +243,8 @@ public GiveWeapons(client)
     // Or, if they have a breakable weapon
     if (weapon_id == Weapon:CaptainBlunderbuss
         || weapon_id == Weapon:SkirmisherFlintlock
+		|| weapon_id == Weapon:SharpshooterRifle
+		|| weapon_id == Weapon:SharpshooterFlintlock
         || weapon_id == Weapon:ArcherCrossbow
         || weapon_id == Weapon:GestirJavelin
         || weapon_id == Weapon:HuscarlThrowingAxe
@@ -250,7 +253,7 @@ public GiveWeapons(client)
         || weapon_id == Weapon:HuscarlSwordShield
         || weapon_id == Weapon:GestirSwordShield) {
     	// Give an archer sword
-        weapon_object = GiveWeapon(client, WeaponNames[Weapon:ArcherSword]);
+        weapon_object = GiveWeapon(client, WeaponNames[Weapon:SharpshooterDagger]);
     	if (weapon_object > 0) {
     	    EquipWeapon(client, weapon_object);
     	}

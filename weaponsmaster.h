@@ -48,13 +48,14 @@ new ClientPlayerSpecial[MAXPLAYERS + 1] = {0, ...};
 #define W_SPCATK	2
 #define W_AMMO_QTY	3
 
-#define W_TOTAL_COUNT   21
-#define W_MAX_LEVEL	19
+#define W_TOTAL_COUNT   24
+#define W_MAX_LEVEL	22
 
 #define W_STRING_LEN    20
 
 enum Weapon {
-    ArcherSword = 0,
+	SharpshooterDagger = 0,
+    ArcherSword,
     BerserkerAxeSword,
     BerserkerAxe,
     SkirmisherCutlass,
@@ -65,8 +66,10 @@ enum Weapon {
     HuscarlAxe,
     HeavyKnightSword,
     HuscarlSwordShield,
+	SharpshooterRifle,
     CaptainBlunderbuss,
     SkirmisherFlintlock,
+	SharpshooterFlintlock,
     ArcherCrossbow,
     ArcherLongbow,
     GestirJavelin,
@@ -78,6 +81,7 @@ enum Weapon {
 };
 
 public const String:WeaponNames[W_TOTAL_COUNT][W_STRING_LEN] = {
+	"dagger",
     "archersword",
     "axesword",
     "bigaxe",
@@ -89,8 +93,10 @@ public const String:WeaponNames[W_TOTAL_COUNT][W_STRING_LEN] = {
     "twoaxe",
     "twosword",
     "vikingshield",
+	"ssrifle",
     "blunderbuss",
     "flintlock",
+	"ssflintlock",
     "crossbow",
     "longbow",
     "javelin",
@@ -113,6 +119,7 @@ Weapon:FindWeaponId(const String:name[]) {
 }
 
 new Weapon:WeaponOrder[W_MAX_LEVEL] = {
+	SharpshooterDagger,
     ArcherSword,
     BerserkerAxeSword,
     BerserkerAxe,
@@ -124,8 +131,10 @@ new Weapon:WeaponOrder[W_MAX_LEVEL] = {
     HuscarlAxe,
     HeavyKnightSword,
     HuscarlSwordShield,
+	SharpshooterRifle,
     CaptainBlunderbuss,
     SkirmisherFlintlock,
+	SharpshooterFlintlock,
     ArcherCrossbow,
     ArcherLongbow,
     GestirJavelin,
@@ -135,6 +144,7 @@ new Weapon:WeaponOrder[W_MAX_LEVEL] = {
 };
 
 public const weapon_properties[W_MAX_LEVEL][5] = {
+	{ W_MELEE	, 1 , 0 , -1 },
     { W_MELEE	, 1 , 0 , -1 },
     { W_MELEE	, 2 , 1 , -1 },
     { W_MELEE	, 1 , 1 , -1 },
@@ -146,8 +156,10 @@ public const weapon_properties[W_MAX_LEVEL][5] = {
     { W_MELEE	, 1 , 0 , -1 },
     { W_MELEE	, 1 , 1 , -1 },
     { W_MELEE	, 2 , 1 , -1 },
+	{ W_RANGED	, 3 , 1 , 5  },
     { W_RANGED	, 2 , 1 , 10 },
     { W_RANGED	, 2 , 0 , 12 },
+	{ W_RANGED	, 2 , 0 , 15 },
     { W_RANGED	, 2 , 0 , 15 },
     { W_RANGED	, 3 , 1 , 30 },
     { W_RANGED	, 3 , 0 , 3  },
