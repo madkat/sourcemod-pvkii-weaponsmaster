@@ -4,51 +4,63 @@
     {
         /**
          * Weapon Choices:
-	 * SharpshooterDagger,             "dagger", 
+         * SharpshooterDagger,             "dagger", 
          * ArcherSword,                    "archersword", 
          * BerserkerAxeSword,              "axesword",    
          * BerserkerAxe,                   "bigaxe",      
-         * SkirmisherCutlass,              "cutlass",     
+         * BondiSeax,                      "seax",
+         * SkirmisherCutlass,              "cutlass", 
+         * ManAtArmsHalberd,               "halberd,
          * CaptainCutlass,                 "cutlass2",    
          * GestirSwordShield,              "seaxshield",  
          * GestirSpear,                    "spear",       
          * HeavyKnightSwordShield,         "swordshield", 
-         * HuscarlAxe,                     "twoaxe",      
+         * HuscarlAxe,                     "twoaxe",
+         * ManAtArmsMaceShield,            "maceshield",
          * HeavyKnightSword,               "twosword",    
          * HuscarlSwordShield,             "vikingshield",
-	 * SharpshooterRifle,              "ssrifle", 
+         * SharpshooterRifle,              "ssrifle",
+         * ManAtArmsCrossbow,              "crossbow2",
          * CaptainBlunderbuss,             "blunderbuss", 
-	 * SkirmisherFlintlock,            "flintlock",   
+         * SkirmisherFlintlock,            "flintlock",   
          * SharpshooterFlintlock,          "ssflintlock",   
+         * BondiFlatbow,                   "flatbow",
          * ArcherCrossbow,                 "crossbow",    
          * ArcherLongbow,                  "longbow",     
          * GestirJavelin,                  "javelin",     
+         * BondiAtlatl,                    "atlatl",
          * HuscarlThrowingAxe,             "throwaxe",    
          * SkirmisherKeg,                  "powderkeg",   
          * CaptainParrot,                  "parrot" && "hook"
          */
 
-	"1" "dagger"
+        "1" "dagger"
         "2" "archersword"
         "3" "axesword"
         "4" "bigaxe"
-        "5" "cutlass"
-        "6" "cutlass2"
-        "7" "seaxshield"
-        "8" "spear"
-        "9" "swordshield"
-        "10" "twoaxe"
-        "11" "twosword"
-        "12" "vikingshield"
-	"13" "ssrifle"
-        "14" "blunderbuss"
-        "15" "flintlock"
-	"16" "ssflintlock"
-        "17" "crossbow"
-        "18" "longbow"
-        "19" "javelin"
-        "20" "throwaxe"
-        "21" "powderkeg"
-        "22" "parrot"
+        "5" "seax"
+        "6" "cutlass"
+        "7" "halberd"
+        "8" "cutlass2"
+        "9" "seaxshield"
+        "10" "spear"
+        "11" "swordshield"
+        "12" "twoaxe"
+        "13" "maceshield"
+        "14" "twosword"
+        "15" "vikingshield"
+        "16" "ssrifle"
+        "17" "crossbow2"
+        "18" "blunderbuss"
+        "19" "flintlock"
+        "20" "ssflintlock"
+        "21" "flatbow"
+        "22" "crossbow"
+        "23" "longbow"
+        "24" "javelin"
+        "25" "atlatl"
+        "26" "throwaxe"
+        "27" "powderkeg"
+        "28" "parrot"
     }
 }
