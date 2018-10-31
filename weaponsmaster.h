@@ -48,8 +48,8 @@ new ClientPlayerSpecial[MAXPLAYERS + 1] = {0, ...};
 #define W_SPCATK	2
 #define W_AMMO_QTY	3
 
-#define W_TOTAL_COUNT   24
-#define W_MAX_LEVEL	22
+#define W_TOTAL_COUNT   30
+#define W_MAX_LEVEL	28
 
 #define W_STRING_LEN    20
 
@@ -58,21 +58,27 @@ enum Weapon {
     ArcherSword,
     BerserkerAxeSword,
     BerserkerAxe,
+    BondiSeax,
     SkirmisherCutlass,
+    ManAtArmsHalberd,
     CaptainCutlass,
     GestirSwordShield,
     GestirSpear,
     HeavyKnightSwordShield,
     HuscarlAxe,
+    ManAtArmsMaceShield,
     HeavyKnightSword,
     HuscarlSwordShield,
 	SharpshooterRifle,
+    ManAtArmsCrossbow,
     CaptainBlunderbuss,
     SkirmisherFlintlock,
 	SharpshooterFlintlock,
+    BondiFlatbow,
     ArcherCrossbow,
     ArcherLongbow,
     GestirJavelin,
+    BondiAtlatl,
     HuscarlThrowingAxe,
     SkirmisherKeg,
     CaptainParrot,
@@ -85,21 +91,27 @@ public const String:WeaponNames[W_TOTAL_COUNT][W_STRING_LEN] = {
     "archersword",
     "axesword",
     "bigaxe",
+    "seax",
     "cutlass",
+    "halberd",
     "cutlass2",
     "seaxshield",
     "spear",
     "swordshield",
     "twoaxe",
+    "maceshield",
     "twosword",
     "vikingshield",
 	"ssrifle",
+    "crossbow2",
     "blunderbuss",
     "flintlock",
 	"ssflintlock",
+    "flatbow",
     "crossbow",
     "longbow",
     "javelin",
+    "atlatl",
     "throwaxe",
     "powderkeg",
     "parrot",
@@ -123,48 +135,60 @@ new Weapon:WeaponOrder[W_MAX_LEVEL] = {
     ArcherSword,
     BerserkerAxeSword,
     BerserkerAxe,
+    BondiSeax,
     SkirmisherCutlass,
+    ManAtArmsHalberd,
     CaptainCutlass,
     GestirSwordShield,
     GestirSpear,
     HeavyKnightSwordShield,
     HuscarlAxe,
+    ManAtArmsMaceShield,
     HeavyKnightSword,
     HuscarlSwordShield,
 	SharpshooterRifle,
+    ManAtArmsCrossbow,
     CaptainBlunderbuss,
     SkirmisherFlintlock,
 	SharpshooterFlintlock,
+    BondiFlatbow,
     ArcherCrossbow,
     ArcherLongbow,
     GestirJavelin,
+    BondiAtlatl,
     HuscarlThrowingAxe,
     SkirmisherKeg,
     CaptainParrot
 };
 
 public const weapon_properties[W_MAX_LEVEL][5] = {
-	{ W_MELEE	, 1 , 0 , -1 },
-    { W_MELEE	, 1 , 0 , -1 },
-    { W_MELEE	, 2 , 1 , -1 },
-    { W_MELEE	, 1 , 1 , -1 },
-    { W_MELEE	, 1 , 1 , -1 },
-    { W_MELEE	, 1 , 0 , -1 },
-    { W_MELEE	, 2 , 0 , -1 },
-    { W_MELEE	, 1 , 1 , -1 },
-    { W_MELEE	, 2 , 0 , -1 },
-    { W_MELEE	, 1 , 0 , -1 },
-    { W_MELEE	, 1 , 1 , -1 },
-    { W_MELEE	, 2 , 1 , -1 },
-	{ W_RANGED	, 3 , 1 , 5  },
-    { W_RANGED	, 2 , 1 , 10 },
-    { W_RANGED	, 2 , 0 , 12 },
-	{ W_RANGED	, 2 , 0 , 15 },
-    { W_RANGED	, 2 , 0 , 15 },
-    { W_RANGED	, 3 , 1 , 30 },
-    { W_RANGED	, 3 , 0 , 3  },
-    { W_RANGED	, 3 , 0 , 8  },
-    { W_SPECIAL	, 3 , 0 , -1 },
-    { W_SPECIAL	, 3 , 0 , 1  }
+	{ W_MELEE	, 1 , 1 , -1 }, // dagger
+    { W_MELEE	, 1 , 0 , -1 }, // archersword
+    { W_MELEE	, 2 , 1 , -1 }, // axesword
+    { W_MELEE	, 1 , 1 , -1 }, // bigaxe
+    { W_MELEE	, 1 , 0 , -1 }, // seax
+    { W_MELEE	, 1 , 1 , -1 }, // cutlass
+    { W_MELEE	, 1 , 1 , -1 }, // halberd
+    { W_MELEE	, 1 , 0 , -1 }, // cutlass2
+    { W_MELEE	, 2 , 0 , -1 }, // seaxshield
+    { W_MELEE	, 1 , 1 , -1 }, // spear
+    { W_MELEE	, 2 , 0 , -1 }, // swordshield
+    { W_MELEE	, 1 , 0 , -1 }, // twoaxe
+    { W_MELEE	, 2 , 1 , -1 }, // maceshield
+    { W_MELEE	, 1 , 1 , -1 }, // twosword
+    { W_MELEE	, 2 , 1 , -1 }, // vikingshield
+	{ W_RANGED	, 3 , 1 , 10  }, // ssrifle
+    { W_RANGED	, 3 , 1 , 4  }, // crossbow2
+    { W_RANGED	, 2 , 1 , 5 }, // blunderbuss
+    { W_RANGED	, 2 , 0 , 12 }, // flintlock
+	{ W_RANGED	, 2 , 1 , 15 }, // ssflintlock
+    { W_RANGED	, 3 , 1 , 40 }, // flatbow
+    { W_RANGED	, 2 , 0 , 15 }, // crossbow
+    { W_RANGED	, 3 , 1 , 30 }, // longbow
+    { W_RANGED	, 3 , 0 , 3  }, // javelin
+    { W_RANGED	, 2 , 0 , 3  }, // atlatl
+    { W_RANGED	, 3 , 0 , 8  }, // throwaxe
+    { W_SPECIAL	, 3 , 0 , -1 }, // powderkeg
+    { W_SPECIAL	, 3 , 0 , 1  } // parrot
 };
 

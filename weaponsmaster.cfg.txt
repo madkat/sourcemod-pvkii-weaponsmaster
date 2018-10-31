@@ -6,39 +6,45 @@
 		{
 			"GiveNamedItem"
 			{
-				"windows"		"354" 
-				"linux"			"355" 
+				"windows"	"405"
+				"linux"		"406"
+				"mac"		"406"
 			}
 			
 			"Weapon_Equip"
 			{
-				"windows"		"232" 
-				"linux"			"233" 
+				"windows"	"265"
+				"linux"		"266"
+				"mac"		"266"
 			}
 
 			"RemoveAllItems"
 			{
-				"windows"		"302" 
-				"linux"			"303" 
+				"windows"	"347" 
+				"linux"		"348"
+				"mac"		"348"
 			}
 
 			"GiveAmmo"
 			{
-				"windows"		"226" 
-				"linux"			"227" 
+				"windows"	"256"
+				"linux"		"257"
+				"mac"		"257"
 			}
                         
 			"ForceRespawn"
 			{
-				"windows"		"285"
-				"linux"			"286"
+				"windows"		"329"
+				"linux"			"330"
+				"mac"			"330"
 			}
 
 			"Spawn"
 			{
-				"windows"		"22"
-				"linux"			"23"
+				"windows"		"24"
+				"linux"			"25"
+				"mac"			"25"
 			}
-                }
+		}
 	}
 }

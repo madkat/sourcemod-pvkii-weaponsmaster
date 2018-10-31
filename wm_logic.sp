@@ -251,7 +251,11 @@ public GiveWeapons(client)
         || weapon_id == Weapon:SkirmisherKeg
         || weapon_id == Weapon:HeavyKnightSwordShield
         || weapon_id == Weapon:HuscarlSwordShield
-        || weapon_id == Weapon:GestirSwordShield) {
+        || weapon_id == Weapon:GestirSwordShield
+        || weapon_id == Weapon:ManAtArmsMaceShield
+        || weapon_id == Weapon:ManAtArmsCrossbow
+        || weapon_id == Weapon:BondiAtlatl
+        || weapon_id == Weapon:BondiFlatbow ) {
     	// Give an archer sword
         weapon_object = GiveWeapon(client, WeaponNames[Weapon:SharpshooterDagger]);
     	if (weapon_object > 0) {
